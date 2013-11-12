@@ -9,8 +9,14 @@ package edu.neumont.edu.jjensen.lab.Model;
  */
 public class Cell {
     private Piece piece;
+    private Position position;
 
     private boolean isOccupied;
+
+    public Cell(char row, int column){
+        position = new Position(row, column);
+    }
+
 
 
     public void setPiece(Piece piece) {
