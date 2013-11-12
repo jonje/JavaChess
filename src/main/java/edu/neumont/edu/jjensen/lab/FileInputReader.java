@@ -11,12 +11,12 @@ import java.util.List;
  * Time: 1:12 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FileIO {
+public class FileInputReader {
 
     private List<String> lines;
     private File filePath;
 
-    public FileIO(String filePath) {
+    public FileInputReader(String filePath) {
         this.filePath = new File(filePath);
 
     }
