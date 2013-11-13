@@ -8,4 +8,9 @@ package edu.neumont.edu.jjensen.lab;
  * To change this template use File | Settings | File Templates.
  */
 public class Main {
+    public static void main(String[] args) {
+        MoveInterpreter moveInterpreter = new MoveInterpreter(args[0]);
+        moveInterpreter.run();
+    }
+
 }

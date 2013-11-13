@@ -2,6 +2,7 @@ package edu.neumont.edu.jjensen.lab;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class FileInputReader {
 
-    private List<String> lines;
+    private List<String> moves;
     private File filePath;
 
     public FileInputReader(String filePath) {
@@ -21,13 +22,17 @@ public class FileInputReader {
 
     }
 
+    public Iterator<String> getMovesList(){
+        return moves.iterator();
+    }
+
     public void readInFile() {
-        lines = new ArrayList<>();
+        moves = new ArrayList<>();
 
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
             while(reader.ready()) {
-                lines.add(reader.readLine());
+                moves.add(reader.readLine());
 
            }
 
@@ -37,6 +42,12 @@ public class FileInputReader {
         } catch (IOException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void displayFile() {
+        for(String line : moves) {
+            System.out.println(line);
         }
     }
 
