@@ -24,6 +24,27 @@ public class MoveInterpreter {
                     setPiece(move, patternMatcher);
 
                 }
+            }),
+
+            new PatternMatcher("(?<move>(?<pos1>[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
+                @Override
+                public void performAction(String move, PatternMatcher patternMatcher) {
+                    movePiece(move, patternMatcher);
+                }
+            }),
+
+            new PatternMatcher("(?<capture>(?<piece>[a-h][1-8 ]) (?<capturePiece>[a-h][1-8])[*])", new Actionable() {
+                @Override
+                public void performAction(String move, PatternMatcher patternMatcher) {
+                    capturePiece(move, patternMatcher);
+                }
+            }),
+
+            new PatternMatcher("(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))", new Actionable() {
+                @Override
+                public void performAction(String move, PatternMatcher patternMatcher) {
+                    castlingMove(move, patternMatcher);
+                }
             })
     };
 
@@ -59,13 +80,43 @@ public class MoveInterpreter {
         Matcher matcher = patternMatcher.getMatcher(move);
         while(matcher.find()) {
             if(getPieceType(matcher.group("pieceType")).equalsIgnoreCase("Invalid")) {
-                System.out.println(matcher.group("pieceType") + " is an invalid piece code");
+                output(matcher.group("pieceType") + " is an invalid piece code");
             } else {
-                System.out.println("Place the " + getPieceColor(matcher.group("color")) + " "
-                        + getPieceType(matcher.group("pieceType")) + " on " + matcher.group("location") );
+                output("Place the " + getPieceColor(matcher.group("color")) + " "
+                        + getPieceType(matcher.group("pieceType")) + " on " + matcher.group("location"));
             }
 
         }
+    }
+
+    private void movePiece(String move, PatternMatcher patternMatcher) {
+        Matcher matcher = patternMatcher.getMatcher(move);
+        while(matcher.find()) {
+            output("Piece at " + matcher.group("pos1") + " moved to " + matcher.group("pos2"));
+
+        }
+
+    }
+
+    private void capturePiece(String move, PatternMatcher patternMatcher) {
+        Matcher matcher = patternMatcher.getMatcher(move);
+
+        while(matcher.find()) {
+            output("Piece at " + matcher.group("piece") + " captures piece at " + matcher.group("capturePiece"));
+        }
+    }
+
+    private void castlingMove(String move, PatternMatcher patternMatcher) {
+        Matcher matcher = patternMatcher.getMatcher(move);
+
+        while(matcher.find()) {
+            output("Piece at " + matcher.group("piece1Pos1") + " moves to cell " + matcher.group("piece1Pos2")
+                    + " and piece at " + matcher.group("piece2Pos1") + " moves to cell " + matcher.group("piece2Pos2"));
+        }
+    }
+
+    private void output(String message) {
+        System.out.println(message);
     }
 
     private Iterator<String> getMoves() {
