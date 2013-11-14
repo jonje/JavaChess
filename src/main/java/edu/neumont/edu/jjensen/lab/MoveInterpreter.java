@@ -11,11 +11,6 @@ import java.util.regex.Matcher;
  * To change this template use File | Settings | File Templates.
  */
 public class MoveInterpreter {
-    //private final String MOVES_TESTFILE = "C:\\Users\\Jonathan\\TestFile.txt";
-    //private final String PIECEMOVE_PATTERN = "(?<pieceMove>(?<pieceType>[a-zA-Z])(?<color>[l,L,d,D])(?<location>[a-hA-H]{1}[1-8]))";
-    //private final String CAPTURE_PATTERN = "(?<capture>(?<piece>[a-h][1-8 ]) (?<capturePiece>[a-h][1-8])[*])";
-    //private final String CASTLING_PATTERN = "(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))";
-    //private final String MOVES_PATTERN = "(?<move>(?<pos1>[a-h][1-8 ]) (?<pos2>[a-h][1-8]))";
 
     private PatternMatcher[] patternMatchers ={
             new PatternMatcher("(?<pieceMove>(?<pieceType>[a-zA-Z])(?<color>[l,L,d,D])(?<location>[a-hA-H]{1}[1-8]))", new Actionable() {
@@ -26,7 +21,14 @@ public class MoveInterpreter {
                 }
             }),
 
-            new PatternMatcher("(?<move>(?<pos1>[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
+            new PatternMatcher("(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))", new Actionable() {
+                @Override
+                public void performAction(String move, PatternMatcher patternMatcher) {
+                    castlingMove(move, patternMatcher);
+                }
+            }),
+
+            new PatternMatcher("(?<move>(?<pos1>^[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
                 @Override
                 public void performAction(String move, PatternMatcher patternMatcher) {
                     movePiece(move, patternMatcher);
@@ -38,16 +40,12 @@ public class MoveInterpreter {
                 public void performAction(String move, PatternMatcher patternMatcher) {
                     capturePiece(move, patternMatcher);
                 }
-            }),
-
-            new PatternMatcher("(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))", new Actionable() {
-                @Override
-                public void performAction(String move, PatternMatcher patternMatcher) {
-                    castlingMove(move, patternMatcher);
-                }
             })
+
+
     };
 
+    private boolean castleingPerformed = false;
     private String filePath;
 
     public MoveInterpreter(String filePath) {
@@ -69,6 +67,7 @@ public class MoveInterpreter {
 
         while(movesIterator.hasNext()) {
             String move = movesIterator.next();
+            castleingPerformed = false;
             for(int i = 0; i < patternMatchers.length; i++) {
                 patternMatchers[i].performAction(move, patternMatchers[i]);
             }
@@ -91,9 +90,12 @@ public class MoveInterpreter {
 
     private void movePiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
-        while(matcher.find()) {
-            output("Piece at " + matcher.group("pos1") + " moved to " + matcher.group("pos2"));
 
+        if(!castleingPerformed) {
+            while(matcher.find()) {
+                output("Piece at " + matcher.group("pos1") + " moved to " + matcher.group("pos2"));
+
+            }
         }
 
     }
@@ -108,10 +110,13 @@ public class MoveInterpreter {
 
     private void castlingMove(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
-
-        while(matcher.find()) {
-            output("Piece at " + matcher.group("piece1Pos1") + " moves to cell " + matcher.group("piece1Pos2")
+        if(matcher.find()) {
+            castleingPerformed = true;
+            while(matcher.find()) {
+                output("Piece at " + matcher.group("piece1Pos1") + " moves to cell " + matcher.group("piece1Pos2")
                     + " and piece at " + matcher.group("piece2Pos1") + " moves to cell " + matcher.group("piece2Pos2"));
+            }
+
         }
     }
 
@@ -151,7 +156,5 @@ public class MoveInterpreter {
         return pieceType;
 
     }
-
-
 
 }
