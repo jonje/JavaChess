@@ -1,5 +1,6 @@
 package edu.neumont.jjensen.lab;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 
@@ -44,12 +45,15 @@ public class MoveInterpreter {
 
     };
 
+    private HashMap<String, String> pieceTypes;
+
     private boolean matchFound;
     private boolean castleingPerformed;
     private String filePath;
 
     public MoveInterpreter(String filePath) {
         this.filePath = filePath;
+        setupPieceTypes();
     }
 
     public void run() {
@@ -85,12 +89,9 @@ public class MoveInterpreter {
         Matcher matcher = patternMatcher.getMatcher(move);
         while(matcher.find()) {
             matchFound = true;
-            if(getPieceType(matcher.group("pieceType")).equalsIgnoreCase("Invalid")) {
-                output(matcher.group("pieceType") + " is an invalid piece code");
-            } else {
-                output("Place the " + getPieceColor(matcher.group("color")) + " "
-                        + getPieceType(matcher.group("pieceType")) + " on " + matcher.group("location"));
-            }
+
+            output("Place the " + getPieceColor(matcher.group("color")) + " "
+                  + getPieceType(matcher.group("pieceType")) + " on " + matcher.group("location"));
 
         }
     }
@@ -124,11 +125,15 @@ public class MoveInterpreter {
             castleingPerformed = true;
             while(matcher.find()) {
                 matchFound = true;
-                output("Piece at " + matcher.group("piece1Pos1") + " moves to cell " + matcher.group("piece1Pos2")
-                    + " and piece at " + matcher.group("piece2Pos1") + " moves to cell " + matcher.group("piece2Pos2"));
+                output(getCastleingOutput( matcher.group("piece1Pos1"), matcher.group("piece1Pos2")) +
+                        getCastleingOutput( matcher.group("piece2Pos1"), matcher.group("piece2Pos2")));
             }
 
         }
+    }
+
+    private String getCastleingOutput(String position1, String position2) {
+        return "Piece at " + position1 + " moves to cell " + position2 + " ";
     }
 
     private void output(String message) {
@@ -141,30 +146,19 @@ public class MoveInterpreter {
         return fileReader.getMovesList();
     }
 
+    private void setupPieceTypes() {
+        pieceTypes = new HashMap<>();
+        pieceTypes.put("r", "Rook");
+        pieceTypes.put("q", "Queen");
+        pieceTypes.put("b", "Bishop");
+        pieceTypes.put("n", "Knight");
+        pieceTypes.put("k", "King");
+        pieceTypes.put("p", "Pawn");
+    }
+
     private String getPieceType(String pieceCode) {
-        String pieceType;
-        if(pieceCode.equalsIgnoreCase("r")) {
-            pieceType = "Rook";
 
-        } else if(pieceCode.equalsIgnoreCase("q")) {
-            pieceType = "Queen";
-
-        } else if(pieceCode.equalsIgnoreCase("b")) {
-            pieceType = "Bishop";
-
-        } else if(pieceCode.equalsIgnoreCase("n")) {
-            pieceType = "Knight";
-
-        } else if(pieceCode.equalsIgnoreCase("k")) {
-            pieceType = "King";
-
-        } else if(pieceCode.equalsIgnoreCase("p")) {
-            pieceType = "Pawn";
-        } else {
-            pieceType = "Invalid";
-        }
-
-        return pieceType;
+        return pieceTypes.get(pieceCode);
 
     }
 
