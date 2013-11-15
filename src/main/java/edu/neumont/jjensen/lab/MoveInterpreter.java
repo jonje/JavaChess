@@ -45,6 +45,7 @@ public class MoveInterpreter {
 
     };
 
+    private boolean matchFound = false;
     private boolean castleingPerformed = false;
     private String filePath;
 
@@ -67,9 +68,15 @@ public class MoveInterpreter {
 
         while(movesIterator.hasNext()) {
             String move = movesIterator.next();
+            matchFound = false;
             castleingPerformed = false;
+
             for(int i = 0; i < patternMatchers.length; i++) {
                 patternMatchers[i].performAction(move, patternMatchers[i]);
+            }
+
+            if(!matchFound) {
+                output(move + " is not a valid move");
             }
         }
     }
@@ -78,6 +85,7 @@ public class MoveInterpreter {
     private void setPiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
         while(matcher.find()) {
+            matchFound = true;
             if(getPieceType(matcher.group("pieceType")).equalsIgnoreCase("Invalid")) {
                 output(matcher.group("pieceType") + " is an invalid piece code");
             } else {
@@ -93,6 +101,7 @@ public class MoveInterpreter {
 
         if(!castleingPerformed) {
             while(matcher.find()) {
+                matchFound = true;
                 output("Piece at " + matcher.group("pos1") + " moved to " + matcher.group("pos2"));
 
             }
@@ -104,6 +113,7 @@ public class MoveInterpreter {
         Matcher matcher = patternMatcher.getMatcher(move);
 
         while(matcher.find()) {
+            matchFound = true;
             output("Piece at " + matcher.group("piece") + " captures piece at " + matcher.group("capturePiece"));
         }
     }
@@ -113,6 +123,7 @@ public class MoveInterpreter {
         if(matcher.find()) {
             castleingPerformed = true;
             while(matcher.find()) {
+                matchFound = true;
                 output("Piece at " + matcher.group("piece1Pos1") + " moves to cell " + matcher.group("piece1Pos2")
                     + " and piece at " + matcher.group("piece2Pos1") + " moves to cell " + matcher.group("piece2Pos2"));
             }
