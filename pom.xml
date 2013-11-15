@@ -11,17 +11,17 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>JavaChess</groupId>
-                <artifactId>JavaChess</artifactId>
-                <version>1.0.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
                     <archive>
                         <manifest>
                             <mainClass>edu.neumont.jjensen.lab.Main</mainClass>
