@@ -6,7 +6,31 @@
 
     <groupId>JavaChess</groupId>
     <artifactId>JavaChess</artifactId>
+    <packaging>jar</packaging>
     <version>1.0.0</version>
+
+    <properties>
+        <jdk.version>1.7</jdk.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>JavaChess</groupId>
+                <artifactId>JavaChess</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <archive>
+                        <manifest>
+                            <mainClass>edu.neumont.jjensen.lab.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     
 </project>
