@@ -5,10 +5,9 @@ import java.util.regex.Matcher;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 1:41 PM
- * To change this template use File | Settings | File Templates.
  */
 public class MoveInterpreter {
 
@@ -28,7 +27,7 @@ public class MoveInterpreter {
                 }
             }),
 
-            new PatternMatcher("(?<move>(?<pos1>^[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
+            new PatternMatcher("(?<move>(?<pos1>[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
                 @Override
                 public void performAction(String move, PatternMatcher patternMatcher) {
                     movePiece(move, patternMatcher);
@@ -45,8 +44,8 @@ public class MoveInterpreter {
 
     };
 
-    private boolean matchFound = false;
-    private boolean castleingPerformed = false;
+    private boolean matchFound;
+    private boolean castleingPerformed;
     private String filePath;
 
     public MoveInterpreter(String filePath) {
@@ -121,6 +120,7 @@ public class MoveInterpreter {
     private void castlingMove(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
         if(matcher.find()) {
+            matcher.reset();
             castleingPerformed = true;
             while(matcher.find()) {
                 matchFound = true;

@@ -5,10 +5,9 @@ import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/13/13
  * Time: 2:38 PM
- * To change this template use File | Settings | File Templates.
  */
 public class PatternMatcher implements Actionable {
     private String pattern;

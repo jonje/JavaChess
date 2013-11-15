@@ -7,10 +7,9 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 1:12 PM
- * To change this template use File | Settings | File Templates.
  */
 public class FileInputReader {
 
@@ -42,12 +41,6 @@ public class FileInputReader {
         } catch (IOException e) {
             e.printStackTrace();
 
-        }
-    }
-
-    public void displayFile() {
-        for(String line : moves) {
-            System.out.println(line);
         }
     }
 
