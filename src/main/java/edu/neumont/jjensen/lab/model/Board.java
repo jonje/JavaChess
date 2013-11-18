@@ -5,10 +5,9 @@ import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 1:55 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Board {
     private HashMap<String, Cell> boardMap;
@@ -35,9 +34,27 @@ public class Board {
         }
     }
 
-    //Todo: Need to finish later
-    public void setPiece(String key, Piece piece) {
 
+    public void setPiece(String key, Piece piece) {
+        boardMap.get(key).setPiece(piece);
+
+    }
+
+    public Cell getCell(String key) {
+        return boardMap.get(key);
+
+    }
+
+    public char getSTARTING_LETTER() {
+        return STARTING_LETTER;
+    }
+
+    public char getEndingLetter() {
+        return ENDING_LETTER;
+    }
+
+    public int getBOARD_SIZE() {
+        return BOARD_SIZE;
     }
 
 

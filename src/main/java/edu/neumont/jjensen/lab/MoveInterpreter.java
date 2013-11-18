@@ -1,5 +1,10 @@
 package edu.neumont.jjensen.lab;
 
+import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.Color;
+import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.pieces.*;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -45,14 +50,18 @@ public class MoveInterpreter {
 
     };
 
-    private HashMap<String, String> pieceTypes;
+    private HashMap<String, Piece> pieceTypes;
 
     private boolean matchFound;
     private boolean castleingPerformed;
     private String filePath;
 
-    public MoveInterpreter(String filePath) {
+    private Controller controller;
+
+    public MoveInterpreter(String filePath, Controller controller) {
         this.filePath = filePath;
+        this.controller = controller;
+
         setupPieceTypes();
     }
 
@@ -60,8 +69,8 @@ public class MoveInterpreter {
         iterateThroughMoves();
     }
 
-    private String getPieceColor(String piece) {
-        return (piece.equalsIgnoreCase("l")) ? "White" : "Black";
+    private Color getPieceColor(String piece) {
+        return (piece.equalsIgnoreCase("l")) ? Color.WHITE : Color.BLACK;
 
     }
 
@@ -89,9 +98,11 @@ public class MoveInterpreter {
         Matcher matcher = patternMatcher.getMatcher(move);
         while(matcher.find()) {
             matchFound = true;
+            Piece piece = getPieceType(matcher.group("pieceType"));
+            piece.setColor(getPieceColor(matcher.group("color")));
+            piece.setAsciiImage();
+            controller.setPiece(matcher.group("location"), piece);
 
-            output("Place the " + getPieceColor(matcher.group("color")) + " "
-                  + getPieceType(matcher.group("pieceType")) + " on " + matcher.group("location"));
 
         }
     }
@@ -102,7 +113,16 @@ public class MoveInterpreter {
         if(!castleingPerformed) {
             while(matcher.find()) {
                 matchFound = true;
-                output("Piece at " + matcher.group("pos1") + " moved to " + matcher.group("pos2"));
+                String pos1Key = matcher.group("pos1").toUpperCase();
+
+                if(controller.getCell(pos1Key).isOccupied()) {
+                    Piece piece = controller.getCell(pos1Key).getPiece();
+                    controller.setPiece(matcher.group("pos2").toUpperCase(), piece);
+                    controller.getCell(pos1Key).removePiece();
+                } else {
+                    output("No piece at " + pos1Key);
+                }
+
 
             }
         }
@@ -148,15 +168,15 @@ public class MoveInterpreter {
 
     private void setupPieceTypes() {
         pieceTypes = new HashMap<>();
-        pieceTypes.put("r", "Rook");
-        pieceTypes.put("q", "Queen");
-        pieceTypes.put("b", "Bishop");
-        pieceTypes.put("n", "Knight");
-        pieceTypes.put("k", "King");
-        pieceTypes.put("p", "Pawn");
+        pieceTypes.put("R", new Rook());
+        pieceTypes.put("Q", new Queen());
+        pieceTypes.put("B", new Bishop());
+        pieceTypes.put("N", new Knight());
+        pieceTypes.put("K", new King());
+        pieceTypes.put("P", new Pawn());
     }
 
-    private String getPieceType(String pieceCode) {
+    private Piece getPieceType(String pieceCode) {
 
         return pieceTypes.get(pieceCode);
 

@@ -1,17 +1,15 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.model.Color;
 import edu.neumont.jjensen.lab.model.Piece;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 2:40 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Bishop extends Piece {
-    public Bishop(Color color) {
-        super(color);
+    public Bishop() {
+        asciiLetter = "b";
     }
 }

@@ -1,5 +1,7 @@
 package edu.neumont.jjensen.lab;
 
+import edu.neumont.jjensen.lab.view.Display;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjensen
@@ -8,9 +10,11 @@ package edu.neumont.jjensen.lab;
  */
 public class Main {
     public static void main(String[] args) {
-
-        MoveInterpreter moveInterpreter = new MoveInterpreter(args[0]);
+        Display display = new Display();
+        MoveInterpreter moveInterpreter = new MoveInterpreter(args[0], display.getController());
         moveInterpreter.run();
+
+        display.displayBoard();
     }
 
 }

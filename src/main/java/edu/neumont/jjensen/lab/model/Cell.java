@@ -18,7 +18,6 @@ public class Cell {
     }
 
 
-
     public void setPiece(Piece piece) {
         this.piece = piece;
         setOccupied(true);
@@ -28,6 +27,7 @@ public class Cell {
         return piece;
     }
 
+
     public void removePiece(){
         piece = null;
         setOccupied(false);
@@ -36,4 +36,13 @@ public class Cell {
     private void setOccupied(boolean isOccupied){
         this.isOccupied = isOccupied;
     }
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
 }
