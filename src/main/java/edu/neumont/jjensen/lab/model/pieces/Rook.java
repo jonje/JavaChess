@@ -14,6 +14,11 @@ public class Rook extends Piece {
 
     }
 
+    @Override
+    public Rook getInstance(){
+        return new Rook();
+    }
+
 
 
 }

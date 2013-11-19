@@ -98,7 +98,7 @@ public class MoveInterpreter {
         Matcher matcher = patternMatcher.getMatcher(move);
         while(matcher.find()) {
             matchFound = true;
-            Piece piece = getPieceType(matcher.group("pieceType"));
+            Piece piece = getPieceType(matcher.group("pieceType")).getInstance();
             piece.setColor(getPieceColor(matcher.group("color")));
             piece.setAsciiImage();
             controller.setPiece(matcher.group("location"), piece);

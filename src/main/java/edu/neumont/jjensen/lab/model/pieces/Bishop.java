@@ -12,4 +12,9 @@ public class Bishop extends Piece {
     public Bishop() {
         asciiLetter = "b";
     }
+
+    @Override
+    public Bishop getInstance() {
+        return new Bishop();
+    }
 }

@@ -12,4 +12,9 @@ public class Pawn extends Piece {
     public Pawn() {
         asciiLetter = "p";
     }
+
+    @Override
+    public Pawn getInstance(){
+        return new Pawn();
+    }
 }

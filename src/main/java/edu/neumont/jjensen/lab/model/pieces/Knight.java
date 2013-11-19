@@ -13,4 +13,9 @@ public class Knight extends Piece {
         asciiLetter = "n";
 
     }
+
+    @Override
+    public Knight getInstance() {
+        return new Knight();
+    }
 }

@@ -35,7 +35,7 @@ public class Controller {
     }
 
     public void setPiece(String key, Piece piece) {
-        game.getCell(key).setPiece(piece);
+        game.getCell(key.toUpperCase()).setPiece(piece);
     }
 
 

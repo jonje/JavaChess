@@ -13,4 +13,9 @@ public class Queen extends Piece {
     public Queen() {
         asciiLetter = "q";
     }
+
+    @Override
+    public Queen getInstance() {
+        return new Queen();
+    }
 }
