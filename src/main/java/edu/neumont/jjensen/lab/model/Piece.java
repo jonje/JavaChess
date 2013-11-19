@@ -1,14 +1,12 @@
 package edu.neumont.jjensen.lab.model;
 
-import edu.neumont.jjensen.lab.model.pieces.PieceFactoryable;
-
 /**
  * Created with IntelliJ IDEA.
  * User: jjesnen
  * Date: 11/12/13
  * Time: 1:56 PM
  */
-public class Piece implements PieceFactoryable{
+public abstract class Piece {
     private Color color;
     private boolean isSelected;
     private String asciiImage;
@@ -48,8 +46,8 @@ public class Piece implements PieceFactoryable{
     }
 
 
-    @Override
-    public Piece getInstance() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+
+    public abstract Piece getInstance();
+
+    public abstract boolean isMoveValid(String move);
 }

@@ -18,4 +18,9 @@ public class Queen extends Piece {
     public Queen getInstance() {
         return new Queen();
     }
+
+    @Override
+    public boolean isMoveValid(String move) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

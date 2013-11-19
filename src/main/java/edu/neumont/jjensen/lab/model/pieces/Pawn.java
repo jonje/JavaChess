@@ -17,4 +17,9 @@ public class Pawn extends Piece {
     public Pawn getInstance(){
         return new Pawn();
     }
+
+    @Override
+    public boolean isMoveValid(String move) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

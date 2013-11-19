@@ -17,4 +17,9 @@ public class Bishop extends Piece {
     public Bishop getInstance() {
         return new Bishop();
     }
+
+    @Override
+    public boolean isMoveValid(String move) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

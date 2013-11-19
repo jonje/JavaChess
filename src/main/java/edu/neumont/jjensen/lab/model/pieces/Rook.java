@@ -19,6 +19,10 @@ public class Rook extends Piece {
         return new Rook();
     }
 
+    @Override
+    public boolean isMoveValid(String move) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
 
 }
