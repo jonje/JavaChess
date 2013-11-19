@@ -6,7 +6,6 @@ import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 
 /**
@@ -29,7 +28,7 @@ public class MoveInterpreter {
             new PatternMatcher("(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))", new Actionable() {
                 @Override
                 public void performAction(String move, PatternMatcher patternMatcher) {
-                    castlingMove(move, patternMatcher);
+                    castleingMove(move, patternMatcher);
                 }
             }),
 
@@ -54,20 +53,17 @@ public class MoveInterpreter {
 
     private boolean matchFound;
     private boolean castleingPerformed;
-    private String filePath;
+  
 
     private Controller controller;
 
-    public MoveInterpreter(String filePath, Controller controller) {
-        this.filePath = filePath;
+    public MoveInterpreter (Controller controller) {
+        
         this.controller = controller;
 
         setupPieceTypes();
     }
 
-    public void run() {
-        iterateThroughMoves();
-    }
 
     private Color getPieceColor(String piece) {
         return (piece.equalsIgnoreCase("l")) ? Color.WHITE : Color.BLACK;
@@ -75,22 +71,21 @@ public class MoveInterpreter {
     }
 
 
-    public void iterateThroughMoves() {
-        Iterator<String> movesIterator = getMoves();
+    public void interpretMove(String move) {
+        
+        matchFound = false;
+        castleingPerformed = false;
 
-        while(movesIterator.hasNext()) {
-            String move = movesIterator.next();
-            matchFound = false;
-            castleingPerformed = false;
-
-            for(int i = 0; i < patternMatchers.length; i++) {
-                patternMatchers[i].performAction(move, patternMatchers[i]);
-            }
-
-            if(!matchFound) {
-                output(move + " is not a valid move");
-            }
+        for(int i = 0; i < patternMatchers.length; i++) {
+            
+            patternMatchers[i].performAction(move, patternMatchers[i]);
         }
+
+        if(!matchFound) {
+            
+            output(move + " is not a valid move");
+        }
+        
     }
 
 
@@ -138,7 +133,7 @@ public class MoveInterpreter {
         }
     }
 
-    private void castlingMove(String move, PatternMatcher patternMatcher) {
+    private void castleingMove(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
         if(matcher.find()) {
             matcher.reset();
@@ -160,11 +155,6 @@ public class MoveInterpreter {
         System.out.println(message);
     }
 
-    private Iterator<String> getMoves() {
-        FileInputReader fileReader = new FileInputReader(filePath);
-        fileReader.readInFile();
-        return fileReader.getMovesList();
-    }
 
     private void setupPieceTypes() {
         pieceTypes = new HashMap<>();

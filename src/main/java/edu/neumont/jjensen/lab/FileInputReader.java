@@ -1,9 +1,8 @@
 package edu.neumont.jjensen.lab;
 
+import edu.neumont.jjensen.lab.controller.Controller;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,25 +12,23 @@ import java.util.List;
  */
 public class FileInputReader {
 
-    private List<String> moves;
-    private File filePath;
+    private MoveInterpreter moveInterpreter;
 
-    public FileInputReader(String filePath) {
-        this.filePath = new File(filePath);
+    public FileInputReader(Controller controller) {
+        moveInterpreter = new MoveInterpreter(controller);
+
 
     }
 
-    public Iterator<String> getMovesList(){
-        return moves.iterator();
-    }
 
-    public void readInFile() {
-        moves = new ArrayList<>();
+    public void readInFile(String filePath) {
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
 
             while(reader.ready()) {
-                moves.add(reader.readLine());
+                moveInterpreter.interpretMove(reader.readLine());
 
            }
 

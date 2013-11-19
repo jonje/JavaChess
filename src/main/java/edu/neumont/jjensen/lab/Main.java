@@ -11,9 +11,8 @@ import edu.neumont.jjensen.lab.view.Display;
 public class Main {
     public static void main(String[] args) {
         Display display = new Display();
-        MoveInterpreter moveInterpreter = new MoveInterpreter(args[0], display.getController());
-        moveInterpreter.run();
-
+        FileInputReader inputReader = new FileInputReader(display.getController());
+        inputReader.readInFile(args[0]);
         display.displayBoard();
     }
 

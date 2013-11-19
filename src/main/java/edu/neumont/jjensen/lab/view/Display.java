@@ -28,7 +28,7 @@ public class Display {
                 if(i == controller.getBoardEndingLetter()) {
                     output += '\n';
                 }
-                System.out.println(output);
+                System.out.print(output);
 
 
             }
