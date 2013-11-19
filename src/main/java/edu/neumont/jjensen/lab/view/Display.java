@@ -23,16 +23,13 @@ public class Display {
 
                 Cell cell = controller.getCell(key);
 
-                if(cell.isOccupied()) {
-                   System.out.print("[ " + cell.getPiece().getAsciiImage() + " ]");
-                } else {
-                    System.out.print("[ - ]");
 
-                }
-
+                String output =  (cell.isOccupied()) ?  "[ " + cell.getPiece().getAsciiImage() + " ]" :  "[ - ]";
                 if(i == controller.getBoardEndingLetter()) {
-                    System.out.print("\n");
+                    output += '\n';
                 }
+                System.out.println(output);
+
 
             }
 
