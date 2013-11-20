@@ -2,10 +2,9 @@ package edu.neumont.jjensen.lab.model;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 1:56 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Cell {
     private Piece piece;
@@ -13,8 +12,8 @@ public class Cell {
 
     private boolean isOccupied;
 
-    public Cell(char row, int column){
-        position = new Position(row, column);
+    public Cell(char column, int row){
+        position = new Position(column, row);
     }
 
 

@@ -11,9 +11,10 @@ import edu.neumont.jjensen.lab.model.Cell;
  */
 public class Display {
     private Controller controller;
+    private boolean cellValuesOn = false;
 
     public Display() {
-        controller = new Controller();
+        controller = new Controller(this);
     }
 
     public void displayBoard() {
@@ -23,8 +24,18 @@ public class Display {
 
                 Cell cell = controller.getCell(key);
 
+                String emptyChar;
 
-                String output =  (cell.isOccupied()) ?  "[ " + cell.getPiece().getAsciiImage() + " ]" :  "[ - ]";
+                if(cellValuesOn) {
+                    emptyChar = "[ " + cell.getPosition().toString() + "]";
+                } else {
+                    emptyChar = "[ - ]";
+
+                }
+
+                String output = (cell.isOccupied()) ?  "[ " + cell.getPiece().getAsciiImage() + " ]" :  emptyChar;
+
+
                 if(i == controller.getBoardEndingLetter()) {
                     output += '\n';
                 }

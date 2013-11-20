@@ -3,6 +3,7 @@ package edu.neumont.jjensen.lab.controller;
 import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.view.Display;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,9 +13,11 @@ import edu.neumont.jjensen.lab.model.Piece;
  */
 public class Controller {
     private ChessGame game;
+    private Display display;
 
-    public Controller() {
+    public Controller(Display display) {
         game = new ChessGame();
+        this.display = display;
     }
 
     public char getBoardStartingLetter() {
@@ -36,6 +39,10 @@ public class Controller {
 
     public void setPiece(String key, Piece piece) {
         game.getCell(key.toUpperCase()).setPiece(piece);
+    }
+
+    public void displayBoaard() {
+        display.displayBoard();
     }
 
 

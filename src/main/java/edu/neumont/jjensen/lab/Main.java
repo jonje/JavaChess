@@ -12,8 +12,12 @@ public class Main {
     public static void main(String[] args) {
         Display display = new Display();
         FileInputReader inputReader = new FileInputReader(display.getController());
-        inputReader.readInFile(args[0]);
-        display.displayBoard();
+        for(String argument: args) {
+            inputReader.readInFile(argument);
+
+        }
+
+
     }
 
 }

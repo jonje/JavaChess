@@ -1,6 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(String move) {
+    public boolean isMoveValid(Position srcPos, Position dstPos) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -1,11 +1,13 @@
 package edu.neumont.jjensen.lab;
 
 import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.Color;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 /**
@@ -49,6 +51,8 @@ public class MoveInterpreter {
 
     };
 
+    private final String NEWLINE = "\n";
+
     private HashMap<String, Piece> pieceTypes;
 
     private boolean matchFound;
@@ -83,7 +87,7 @@ public class MoveInterpreter {
 
         if(!matchFound) {
             
-            output(move + " is not a valid move");
+            output(move + " is not a valid move" + NEWLINE);
         }
         
     }
@@ -91,7 +95,7 @@ public class MoveInterpreter {
 
     private void setPiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
-        while(matcher.find()) {
+        if(matcher.find()) {
             matchFound = true;
             Piece piece = getPieceType(matcher.group("pieceType")).getInstance();
             piece.setColor(getPieceColor(matcher.group("color")));
@@ -109,18 +113,35 @@ public class MoveInterpreter {
             while(matcher.find()) {
                 matchFound = true;
                 String pos1Key = matcher.group("pos1").toUpperCase();
+                String pos2Key = matcher.group("pos2").toUpperCase();
 
-                if(controller.getCell(pos1Key).isOccupied()) {
-                    Piece piece = controller.getCell(pos1Key).getPiece();
-                    controller.setPiece(matcher.group("pos2").toUpperCase(), piece);
-                    controller.getCell(pos1Key).removePiece();
+                Cell srcCell = controller.getCell(pos1Key);
+                Cell dstCell = controller .getCell(pos2Key);
+
+                if(srcCell.isOccupied()) {
+                    Piece piece = srcCell.getPiece();
+                    if(piece.isMoveValid(srcCell.getPosition(), dstCell.getPosition())) {
+                        controller.setPiece(pos2Key, piece);
+                        controller.getCell(pos1Key).removePiece();
+
+                        controller.displayBoaard();
+                        output("Press any key to continue...");
+                        new Scanner(System.in).nextLine();
+                    } else {
+                        output(move + " is an invalid move" + NEWLINE);
+                    }
+
+
                 } else {
-                    output("No piece at " + pos1Key);
+                    output("No piece at " + pos1Key + NEWLINE);
                 }
+
+
 
 
             }
         }
+
 
     }
 

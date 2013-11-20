@@ -2,30 +2,29 @@ package edu.neumont.jjensen.lab.model;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Jonathan
+ * User: jjensen
  * Date: 11/12/13
  * Time: 2:22 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Position {
-    private char row;
-    private int column;
+    private char column;
+    private int row;
 
-    public Position(char row, int column) {
+    public Position(char column, int row) {
         this.row = row;
         this.column = column;
     }
 
-    public char getRow() {
-        return row;
+    public char getColumn() {
+        return column;
     }
 
-    public int getColumn(){
-        return column;
+    public int getRow(){
+        return row;
     }
 
     @Override
     public String toString() {
-        return "" + row + column;
+        return "" + column + row;
     }
 }

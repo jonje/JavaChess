@@ -45,9 +45,17 @@ public abstract class Piece {
 
     }
 
+    protected boolean columnsMatch(char srcColumn, char destColumn) {
+        return (srcColumn == destColumn);
+    }
+
+    protected boolean rowsMatch(int srcRow, int destRow) {
+        return (srcRow == destRow);
+    }
+
 
 
     public abstract Piece getInstance();
 
-    public abstract boolean isMoveValid(String move);
+    public abstract boolean isMoveValid(Position srcPos, Position dstPos);
 }

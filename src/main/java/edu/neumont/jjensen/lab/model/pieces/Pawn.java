@@ -1,6 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,8 +10,10 @@ import edu.neumont.jjensen.lab.model.Piece;
  * Time: 2:40 PM
  */
 public class Pawn extends Piece {
+    private boolean isFirstTurn;
     public Pawn() {
         asciiLetter = "p";
+        isFirstTurn = true;
     }
 
     @Override
@@ -19,7 +22,29 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(String move) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean isMoveValid(Position srcPos, Position dstPos) {
+        return ((columnsMatch(srcPos.getColumn(), dstPos.getColumn())) && isValidDistance(srcPos.getRow(), dstPos.getRow())) ? true : false;
+
     }
+
+    private boolean isValidDistance(int srcRow, int destRow) {
+        boolean isValid = false;
+        int difference = srcRow - destRow;
+
+        if(isFirstTurn) {
+            if(difference <= 2 && difference >= -2) {
+                isValid = true;
+
+            }
+
+        } else {
+            if(difference <= 1 && difference >= -1) {
+                isValid = true;
+
+            }
+        }
+        return isValid;
+
+    }
+
 }
