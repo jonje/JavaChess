@@ -21,6 +21,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position dstPos) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return (srcPos.getRowDifference(dstPos) == srcPos.getColumnDifference(dstPos)) ? true : false;
     }
 }

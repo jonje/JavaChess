@@ -27,4 +27,12 @@ public class Position {
     public String toString() {
         return "" + column + row;
     }
+
+    public int getRowDifference(Position pos2) {
+        return this.getRow() - pos2.getRow();
+    }
+
+    public int getColumnDifference(Position pos2) {
+        return this.getColumn() - pos2.getColumn();
+    }
 }

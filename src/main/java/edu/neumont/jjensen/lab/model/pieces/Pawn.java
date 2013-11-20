@@ -23,13 +23,13 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position dstPos) {
-        return ((columnsMatch(srcPos.getColumn(), dstPos.getColumn())) && isValidDistance(srcPos.getRow(), dstPos.getRow())) ? true : false;
+        return ((columnsMatch(srcPos.getColumn(), dstPos.getColumn())) && isValidDistance(srcPos, dstPos)) ? true : false;
 
     }
 
-    private boolean isValidDistance(int srcRow, int destRow) {
+    private boolean isValidDistance(Position srcPos, Position destPos) {
         boolean isValid = false;
-        int difference = srcRow - destRow;
+        int difference = srcPos.getRowDifference(destPos);
 
         if(isFirstTurn) {
             if(difference <= 2 && difference >= -2) {
