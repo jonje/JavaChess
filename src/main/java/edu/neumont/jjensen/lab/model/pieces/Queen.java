@@ -22,6 +22,7 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+
+        return (new Bishop().isMoveValid(srcPos, destPos)) || (new Rook().isMoveValid(srcPos, destPos));
     }
 }
