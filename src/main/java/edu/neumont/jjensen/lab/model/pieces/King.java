@@ -10,6 +10,7 @@ import edu.neumont.jjensen.lab.model.Position;
  * Time: 2:39 PM
  */
 public class King extends Piece {
+    private final int MAX_MOVE = 1;
     public King() {
         asciiLetter = "k";
 
@@ -22,7 +23,13 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position dstPos) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean isMoveValid(Position srcPos, Position destPos) {
+        int differenceInRows = srcPos.getRowDifference(destPos);
+        int differenceInColumns = srcPos.getColumnDifference(destPos);
+        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns)) ? true : false;
+    }
+
+    private boolean isInBounds(int difference) {
+        return (difference <= MAX_MOVE && difference >= -MAX_MOVE);
     }
 }

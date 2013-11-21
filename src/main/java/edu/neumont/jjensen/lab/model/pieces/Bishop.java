@@ -20,7 +20,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position dstPos) {
-        return (srcPos.getRowDifference(dstPos) == srcPos.getColumnDifference(dstPos)) ? true : false;
+    public boolean isMoveValid(Position srcPos, Position destPos) {
+        return (srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) ? true : false;
     }
 }

@@ -22,8 +22,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position dstPos) {
-        return ((columnsMatch(srcPos.getColumn(), dstPos.getColumn())) && isValidDistance(srcPos, dstPos)) ? true : false;
+    public boolean isMoveValid(Position srcPos, Position destPos) {
+        return ((columnsMatch(srcPos.getColumn(), destPos.getColumn())) && isValidDistance(srcPos, destPos)) ? true : false;
 
     }
 
