@@ -27,7 +27,7 @@ public class King extends Piece {
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         int differenceInRows = srcPos.getRowDifference(destPos);
         int differenceInColumns = srcPos.getColumnDifference(destPos);
-        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns)) ? true : false;
+        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns));
     }
 
     private boolean isInBounds(int difference) {
