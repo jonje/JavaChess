@@ -35,4 +35,32 @@ public class Position {
     public int getColumnDifference(Position pos2) {
         return this.getColumn() - pos2.getColumn();
     }
+
+    public boolean isSameColumn(Position destPos) {
+        return (this.getColumn() == destPos.getColumn());
+    }
+
+    public boolean isSameRow(Position destPos) {
+        return (this.getRow() == destPos.getRow());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Position position = (Position) o;
+
+        if (column != position.column) return false;
+        if (row != position.row) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) column;
+        result = 31 * result + row;
+        return result;
+    }
 }

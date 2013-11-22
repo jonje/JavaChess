@@ -45,13 +45,7 @@ public abstract class Piece {
 
     }
 
-    protected boolean columnsMatch(char srcColumn, char destColumn) {
-        return (srcColumn == destColumn);
-    }
 
-    protected boolean rowsMatch(int srcRow, int destRow) {
-        return (srcRow == destRow);
-    }
 
 
 

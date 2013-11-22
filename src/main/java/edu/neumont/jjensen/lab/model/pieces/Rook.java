@@ -22,8 +22,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos) {
-        return (!columnsMatch(srcPos.getColumn(), destPos.getColumn()) && !rowsMatch(srcPos.getRow(), destPos.getRow())) ? false : true;
 
+          return (srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos));
     }
 
 
