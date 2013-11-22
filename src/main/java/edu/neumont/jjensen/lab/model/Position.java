@@ -60,6 +60,14 @@ public class Position {
         return (this.getRow() > pos.getRow()) ? this : pos;
     }
 
+    public Position getLargestPosition(Position pos) {
+        return (this.getColumn() > pos.getColumn() && this.getRow() > pos.getRow()) ? this : pos;
+    }
+
+    public Position getSmallestPosition(Position pos) {
+        return (this.getColumn() < pos.getColumn() && this.getRow() < pos.getRow()) ? this : pos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

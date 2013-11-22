@@ -1,6 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -22,6 +23,26 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
-        return (srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) ? true : false;
+        boolean isValid = true;
+        if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos))) {
+            Position startingPos = srcPos.getSmallestPosition(destPos);
+            Position endingPos = srcPos.getLargestPosition(destPos);
+            int rowCounter = startingPos.getRow() + 1;
+
+            for(int i = startingPos.getColumn() + 1;  i < endingPos.getColumn(); i++, rowCounter++) {
+
+                Cell cell = controller.getCell("" + (char)i + rowCounter);
+
+                if(cell.isOccupied()) {
+                    isValid = false;
+                    break;
+                }
+            }
+
+        } else {
+            isValid = false;
+        }
+
+        return (srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos));
     }
 }
