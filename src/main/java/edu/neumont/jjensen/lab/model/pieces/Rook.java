@@ -58,7 +58,7 @@ public class Rook extends Piece {
         }
 
         return isValid;
-          //return (srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos));
+
     }
 
 
