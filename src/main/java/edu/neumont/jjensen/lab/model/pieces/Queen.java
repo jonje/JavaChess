@@ -1,5 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
+import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -21,8 +22,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos) {
+    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
 
-        return (new Bishop().isMoveValid(srcPos, destPos)) || (new Rook().isMoveValid(srcPos, destPos));
+        return (new Bishop().isMoveValid(srcPos, destPos, controller)) || (new Rook().isMoveValid(srcPos, destPos, controller));
     }
 }

@@ -1,5 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
+import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -23,7 +24,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos) {
+    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         int differenceInRows = srcPos.getRowDifference(destPos);
         int differenceInColumns = srcPos.getColumnDifference(destPos);
         return (isInBounds(differenceInRows) && isInBounds(differenceInColumns)) ? true : false;

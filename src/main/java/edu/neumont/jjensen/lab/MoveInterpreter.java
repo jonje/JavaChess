@@ -120,7 +120,7 @@ public class MoveInterpreter {
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
-                    if(piece.isMoveValid(srcCell.getPosition(), dstCell.getPosition())) {
+                    if(piece.isMoveValid(srcCell.getPosition(), dstCell.getPosition(), controller)) {
                         controller.setPiece(pos2Key, piece);
                         controller.getCell(pos1Key).removePiece();
 

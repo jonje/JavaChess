@@ -1,5 +1,7 @@
 package edu.neumont.jjensen.lab.model;
 
+import edu.neumont.jjensen.lab.controller.Controller;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjesnen
@@ -51,5 +53,5 @@ public abstract class Piece {
 
     public abstract Piece getInstance();
 
-    public abstract boolean isMoveValid(Position srcPos, Position destPos);
+    public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);
 }

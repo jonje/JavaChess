@@ -44,6 +44,22 @@ public class Position {
         return (this.getRow() == destPos.getRow());
     }
 
+    public Position getSmallestPositionByColumn(Position pos) {
+        return (this.getColumn() < pos.getColumn()) ? this : pos;
+    }
+
+    public Position getSmallestPositionByRow(Position pos) {
+        return (this.getRow() < pos.getRow()) ? this : pos;
+    }
+
+    public Position getLargestPositionByColumn(Position pos) {
+        return (this.getColumn() > pos.getColumn()) ? this : pos;
+    }
+
+    public Position getLargestPositionByRow(Position pos) {
+        return (this.getRow() > pos.getRow()) ? this : pos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
