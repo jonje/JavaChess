@@ -33,7 +33,7 @@ public class Bishop extends Piece {
 
                 Cell cell = controller.getCell("" + (char)i + rowCounter);
 
-                if(cell.isOccupied()) {
+                if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
                     isValid = false;
                     break;
                 }

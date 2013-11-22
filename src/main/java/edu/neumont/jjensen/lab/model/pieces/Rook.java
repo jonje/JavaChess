@@ -33,7 +33,7 @@ public class Rook extends Piece {
                 for(int i = startingPos.getRow() + 1; i < endingPos.getRow(); i++) {
                     Cell cell = controller.getCell("" + startingPos.getColumn() + i);
 
-                    if(cell.isOccupied()) {
+                    if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
                         isValid = false;
                         break;
                     }
@@ -44,9 +44,9 @@ public class Rook extends Piece {
                 Position endingPos = srcPos.getLargestPositionByColumn(destPos);
 
                 for(int i = startingPos.getColumn() + 1; i < endingPos.getColumn(); i++) {
-                    Cell cell = controller.getCell("" + i + startingPos.getRow());
+                    Cell cell = controller.getCell("" + (char)i + startingPos.getRow());
 
-                    if(cell.isOccupied()) {
+                    if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
                         isValid = false;
                         break;
                     }
