@@ -12,7 +12,6 @@ import edu.neumont.jjensen.lab.model.Position;
  */
 public class Display {
     private Controller controller;
-    private boolean cellValuesOn = true;
 
     public Display() {
         controller = new Controller(this);
@@ -29,10 +28,6 @@ public class Display {
 
                  output += (cell.isOccupied()) ?  "[ " + cell.getPiece().getAsciiImage() + " ]" :  emptyCell;
 
-
-//                if(i == controller.getBoardSize() -1) {
-//                    output += '\n';
-//                }
 
             }
             System.out.println(output);
