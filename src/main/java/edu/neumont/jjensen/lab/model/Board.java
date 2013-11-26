@@ -35,7 +35,6 @@ public class Board {
     }
 
     public Cell getCell(Position key) {
-        //System.out.println(key.getColumnAsIndex() + ", " + key.getRowAsIndex());
         return cells[key.getColumnAsIndex()][key.getRowAsIndex()];
 
     }

@@ -1,10 +1,7 @@
 package edu.neumont.jjensen.lab;
 
 import edu.neumont.jjensen.lab.controller.Controller;
-import edu.neumont.jjensen.lab.model.Cell;
-import edu.neumont.jjensen.lab.model.Color;
-import edu.neumont.jjensen.lab.model.Piece;
-import edu.neumont.jjensen.lab.model.Position;
+import edu.neumont.jjensen.lab.model.*;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
@@ -70,8 +67,8 @@ public class MoveInterpreter {
     }
 
 
-    private Color getPieceColor(String piece) {
-        return (piece.equalsIgnoreCase("l")) ? Color.WHITE : Color.BLACK;
+    private TeamColor getPieceColor(String piece) {
+        return (piece.equalsIgnoreCase("l")) ? TeamColor.WHITE : TeamColor.BLACK;
 
     }
 
@@ -117,7 +114,7 @@ public class MoveInterpreter {
                 Position pos2Key = new Position(matcher.group("pos2").toUpperCase());
 
                 Cell srcCell = controller.getCell(pos1Key);
-                Cell dstCell = controller .getCell(pos2Key);
+
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
@@ -127,6 +124,7 @@ public class MoveInterpreter {
 
                         controller.displayBoaard();
                         output("Press any key to continue...");
+                        controller.endTurn();
                         new Scanner(System.in).nextLine();
                     } else {
                         output(move + " is an invalid move" + NEWLINE);

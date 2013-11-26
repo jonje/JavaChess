@@ -8,9 +8,16 @@ package edu.neumont.jjensen.lab.model;
  */
 public class ChessGame {
     private Board board;
+    private Player whitePlayer;
+    private Player blackPlayer;
+    private Player currentPlayer;
 
     public ChessGame() {
         board = new Board();
+        whitePlayer = new Player(TeamColor.WHITE);
+        blackPlayer = new Player(TeamColor.BLACK);
+
+        currentPlayer = whitePlayer;
     }
 
     public Cell getCell(Position key) {
@@ -19,6 +26,15 @@ public class ChessGame {
 
     public int getBoardSize(){
         return board.getBOARD_SIZE();
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void endTurn() {
+        currentPlayer = (currentPlayer.getTeamColor().equals(TeamColor.WHITE)) ? blackPlayer : whitePlayer;
+
     }
 
 

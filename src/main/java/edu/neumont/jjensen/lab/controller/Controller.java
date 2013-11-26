@@ -1,9 +1,6 @@
 package edu.neumont.jjensen.lab.controller;
 
-import edu.neumont.jjensen.lab.model.Cell;
-import edu.neumont.jjensen.lab.model.ChessGame;
-import edu.neumont.jjensen.lab.model.Piece;
-import edu.neumont.jjensen.lab.model.Position;
+import edu.neumont.jjensen.lab.model.*;
 import edu.neumont.jjensen.lab.view.Display;
 
 /**
@@ -35,6 +32,14 @@ public class Controller {
 
     public void displayBoaard() {
         display.displayBoard();
+    }
+
+    public void endTurn() {
+        game.endTurn();
+    }
+
+    public Player getCurrentPlayer() {
+        return game.getCurrentPlayer();
     }
 
 

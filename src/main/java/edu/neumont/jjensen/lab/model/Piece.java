@@ -9,7 +9,7 @@ import edu.neumont.jjensen.lab.controller.Controller;
  * Time: 1:56 PM
  */
 public abstract class Piece {
-    private Color color;
+    private TeamColor color;
     private boolean isSelected;
     private String asciiImage;
     protected String asciiLetter;
@@ -18,11 +18,11 @@ public abstract class Piece {
 
     }
 
-    public void setColor(Color color) {
+    public void setColor(TeamColor color) {
         this.color = color;
     }
 
-    public Color getColor() {
+    public TeamColor getColor() {
         return color;
     }
 
@@ -43,8 +43,12 @@ public abstract class Piece {
     }
 
     protected String getProperAsciiCase(String character) {
-        return (color == Color.WHITE) ? character.toUpperCase() : character.toLowerCase();
+        return (color == TeamColor.WHITE) ? character.toUpperCase() : character.toLowerCase();
 
+    }
+
+    protected boolean isCurrentTurn(Player currentPlayer) {
+        return (this.getColor().equals(currentPlayer.getTeamColor()));
     }
 
     public abstract Piece getInstance();
