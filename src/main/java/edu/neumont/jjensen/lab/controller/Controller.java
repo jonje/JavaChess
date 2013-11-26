@@ -3,6 +3,7 @@ package edu.neumont.jjensen.lab.controller;
 import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
 import edu.neumont.jjensen.lab.view.Display;
 
 /**
@@ -20,25 +21,16 @@ public class Controller {
         this.display = display;
     }
 
-    public char getBoardStartingLetter() {
-        return game.getBoardStartingLetter();
-    }
-
-    public char getBoardEndingLetter() {
-        return game.getBoardEndingLetter();
-
-    }
-
     public int getBoardSize() {
         return game.getBoardSize();
     }
 
-    public Cell getCell(String key) {
+    public Cell getCell(Position key) {
         return game.getCell(key);
     }
 
-    public void setPiece(String key, Piece piece) {
-        game.getCell(key.toUpperCase()).setPiece(piece);
+    public void setPiece(Position key, Piece piece) {
+        game.getCell(key).setPiece(piece);
     }
 
     public void displayBoaard() {

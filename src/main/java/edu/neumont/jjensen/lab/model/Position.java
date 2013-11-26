@@ -8,12 +8,23 @@ package edu.neumont.jjensen.lab.model;
  */
 public class Position {
     private char column;
-    private int row;
+    private char row;
 
-    public Position(char column, int row) {
-        this.row = row;
-        this.column = column;
+    public Position(String key) {
+
+        this.row = key.charAt(1);
+        this.column = key.charAt(0);
     }
+
+    public Position(char row, char column) {
+        int columnInt = column + 'A';
+        int rowInt = row + '1';
+
+        this.column = (char)columnInt;
+        this.row = (char)rowInt;
+
+    }
+
 
     public char getColumn() {
         return column;
@@ -21,6 +32,14 @@ public class Position {
 
     public int getRow(){
         return row;
+    }
+
+    public int getColumnAsIndex() {
+        return column - 'A';
+    }
+
+    public int getRowAsIndex() {
+        return row - '1';
     }
 
     @Override

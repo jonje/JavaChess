@@ -12,8 +12,8 @@ public class Cell {
 
     private boolean isOccupied;
 
-    public Cell(char column, int row){
-        position = new Position(column, row);
+    public Cell(){
+
     }
 
 

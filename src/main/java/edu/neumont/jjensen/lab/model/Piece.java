@@ -47,10 +47,6 @@ public abstract class Piece {
 
     }
 
-
-
-
-
     public abstract Piece getInstance();
 
     public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);

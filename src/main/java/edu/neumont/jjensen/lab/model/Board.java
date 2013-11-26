@@ -1,8 +1,5 @@
 package edu.neumont.jjensen.lab.model;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 /**
  * Created with IntelliJ IDEA.
  * User: jjensen
@@ -10,10 +7,7 @@ import java.util.Iterator;
  * Time: 1:55 PM
  */
 public class Board {
-    private HashMap<String, Cell> boardMap;
-
-    private final char STARTING_LETTER = 'A';
-    private final char ENDING_LETTER = 'H';
+    private Cell[][] cells;
 
     private final int BOARD_SIZE = 8;
 
@@ -24,33 +18,26 @@ public class Board {
 
 
     private void setupBoard() {
-        boardMap = new HashMap<>();
+        cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-        for(char i = STARTING_LETTER; i <= ENDING_LETTER; i++) {
-            for(int j = 1; j <= BOARD_SIZE; j++) {
-                String key = "" + i + j;
-                boardMap.put(key, new Cell(i,j));
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for(int j = 0; j < BOARD_SIZE; j++) {
+                 cells[i][j] = new Cell();
+
             }
         }
     }
 
 
-    public void setPiece(String key, Piece piece) {
-        boardMap.get(key).setPiece(piece);
+    public void setPiece(Position key, Piece piece) {
+        cells[key.getColumnAsIndex()][key.getRow()].setPiece(piece);
 
     }
 
-    public Cell getCell(String key) {
-        return boardMap.get(key);
+    public Cell getCell(Position key) {
+        //System.out.println(key.getColumnAsIndex() + ", " + key.getRowAsIndex());
+        return cells[key.getColumnAsIndex()][key.getRowAsIndex()];
 
-    }
-
-    public char getSTARTING_LETTER() {
-        return STARTING_LETTER;
-    }
-
-    public char getEndingLetter() {
-        return ENDING_LETTER;
     }
 
     public int getBOARD_SIZE() {

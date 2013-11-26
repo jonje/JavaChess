@@ -4,6 +4,7 @@ import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.Color;
 import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
@@ -100,7 +101,7 @@ public class MoveInterpreter {
             Piece piece = getPieceType(matcher.group("pieceType")).getInstance();
             piece.setColor(getPieceColor(matcher.group("color")));
             piece.setAsciiImage();
-            controller.setPiece(matcher.group("location"), piece);
+            controller.setPiece(new Position(matcher.group("location").toUpperCase()), piece);
 
 
         }
@@ -112,15 +113,15 @@ public class MoveInterpreter {
         if(!castleingPerformed) {
             while(matcher.find()) {
                 matchFound = true;
-                String pos1Key = matcher.group("pos1").toUpperCase();
-                String pos2Key = matcher.group("pos2").toUpperCase();
+                Position pos1Key = new Position(matcher.group("pos1").toUpperCase());
+                Position pos2Key = new Position(matcher.group("pos2").toUpperCase());
 
                 Cell srcCell = controller.getCell(pos1Key);
                 Cell dstCell = controller .getCell(pos2Key);
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
-                    if(piece.isMoveValid(srcCell.getPosition(), dstCell.getPosition(), controller)) {
+                    if(piece.isMoveValid(pos1Key, pos2Key, controller)) {
                         controller.setPiece(pos2Key, piece);
                         controller.getCell(pos1Key).removePiece();
 

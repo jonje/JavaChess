@@ -13,7 +13,7 @@ public class ChessGame {
         board = new Board();
     }
 
-    public Cell getCell(String key) {
+    public Cell getCell(Position key) {
         return board.getCell(key);
     }
 
@@ -21,13 +21,6 @@ public class ChessGame {
         return board.getBOARD_SIZE();
     }
 
-    public char getBoardEndingLetter(){
-        return board.getEndingLetter();
-    }
-
-    public char getBoardStartingLetter(){
-        return board.getSTARTING_LETTER();
-    }
 
 
 }
