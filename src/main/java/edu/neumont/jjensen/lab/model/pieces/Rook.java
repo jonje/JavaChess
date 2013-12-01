@@ -25,7 +25,7 @@ public class Rook extends Piece {
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         boolean isValid = true;
-        if((srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos))) {
+        if((srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos) && isTeamsTurn(controller))) {
 
             if(srcPos.isSameColumn(destPos)){
                isValid = isPieceInRowPath(srcPos, destPos, controller);
@@ -40,6 +40,8 @@ public class Rook extends Piece {
         return isValid;
 
     }
+
+
 
     private boolean isPieceInRowPath(Position srcPos, Position destPos, Controller controller) {
         boolean isValid = true;

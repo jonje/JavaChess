@@ -23,7 +23,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
-        return inBounds(srcPos.getColumnDifference(destPos), srcPos.getRowDifference(destPos));
+        return inBounds(srcPos.getColumnDifference(destPos), srcPos.getRowDifference(destPos)) && isTeamsTurn(controller);
 
     }
 

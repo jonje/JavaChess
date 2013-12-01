@@ -26,7 +26,7 @@ public class Pawn extends Piece {
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         boolean isValid = true;
-        if(((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos))) {
+        if(((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos) && isTeamsTurn(controller))) {
             Cell cell = controller.getCell(destPos);
 
             if(cell.isOccupied()) {

@@ -24,25 +24,35 @@ public class Bishop extends Piece {
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         boolean isValid = true;
-        if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos))) {
-            Position startingPos = srcPos.getSmallestPosition(destPos);
-            Position endingPos = srcPos.getLargestPosition(destPos);
-            int rowCounter = startingPos.getRow() + 1;
-
-            for(int i = startingPos.getColumn() + 1;  i < endingPos.getColumn(); i++, rowCounter++) {
-
-                Cell cell = controller.getCell(new Position("" + (char)i + rowCounter));
-
-                if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                    isValid = false;
-                    break;
-                }
-            }
+        if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) && isTeamsTurn(controller)) {
+            isValid = isPieceNotInPath(srcPos, destPos, controller);
 
         } else {
             isValid = false;
         }
 
-        return (srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos));
+        return isValid; //(srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos));
+    }
+
+    private boolean isPieceNotInPath(Position srcPos, Position destPos, Controller controller) {
+        boolean isValid = true;
+        boolean isPieceFound = false;
+
+        Position startingPos = srcPos.getSmallestPosition(destPos);
+        Position endingPos = srcPos.getLargestPosition(destPos);
+        int rowCounter = startingPos.getRow() + 1;
+
+        for(int i = startingPos.getColumn() + 1;  i < endingPos.getColumn() && !isPieceFound; i++, rowCounter++) {
+
+            Cell cell = controller.getCell(new Position("" + (char)i + rowCounter));
+
+            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
+                isValid = false;
+                isPieceFound = true;
+
+            }
+        }
+
+        return isValid;
     }
 }

@@ -51,6 +51,11 @@ public abstract class Piece {
         return (this.getColor().equals(currentPlayer.getTeamColor()));
     }
 
+    protected boolean isTeamsTurn(Controller controller) {
+        return this.getColor().equals(controller.getCurrentPlayer().getTeamColor());
+
+    }
+
     public abstract Piece getInstance();
 
     public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);
