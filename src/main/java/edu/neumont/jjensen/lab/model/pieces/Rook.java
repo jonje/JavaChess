@@ -26,31 +26,11 @@ public class Rook extends Piece {
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
         boolean isValid = true;
         if((srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos))) {
-            if(srcPos.isSameColumn(destPos)) {
-                Position startingPos = srcPos.getSmallestPositionByRow(destPos);
-                Position endingPos = srcPos.getLargestPositionByRow(destPos);
 
-                for(int i = startingPos.getRow() + 1; i < endingPos.getRow(); i++) {
-                    Cell cell = controller.getCell(new Position("" + startingPos.getColumn() + i));
-
-                    if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                        isValid = false;
-                        break;
-                    }
-
-                }
+            if(srcPos.isSameColumn(destPos)){
+               isValid = isPieceInRowPath(srcPos, destPos, controller);
             } else {
-                Position startingPos = srcPos.getSmallestPositionByColumn(destPos);
-                Position endingPos = srcPos.getLargestPositionByColumn(destPos);
-
-                for(int i = startingPos.getColumn() + 1; i < endingPos.getColumn(); i++) {
-                    Cell cell = controller.getCell(new Position("" + (char)i + startingPos.getRow()));
-
-                    if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
-                        isValid = false;
-                        break;
-                    }
-                }
+                isValid = isPieceInColumnPath(srcPos, destPos, controller);
             }
         } else {
             isValid = false;
@@ -59,6 +39,47 @@ public class Rook extends Piece {
 
         return isValid;
 
+    }
+
+    private boolean isPieceInRowPath(Position srcPos, Position destPos, Controller controller) {
+        boolean isValid = true;
+        boolean isPieceFound = false;
+        Position startingPos = srcPos.getSmallestPositionByRow(destPos);
+        Position endingPos = srcPos.getLargestPositionByRow(destPos);
+
+        for(int i = startingPos.getRow() + 1; i < endingPos.getRow() && !isPieceFound; i++) {
+            Cell cell = controller.getCell(new Position("" + startingPos.getColumn() + (char)i));
+
+            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
+                isValid = false;
+                isPieceFound = true;
+
+            }
+
+        }
+
+        return isValid;
+
+    }
+
+    private boolean isPieceInColumnPath(Position srcPos, Position destPos, Controller controller) {
+        boolean isValid = true;
+        boolean isPieceFound = false;
+
+        Position startingPos = srcPos.getSmallestPositionByColumn(destPos);
+        Position endingPos = srcPos.getLargestPositionByColumn(destPos);
+
+        for(int i = startingPos.getColumn() + 1; i < endingPos.getColumn() && !isPieceFound; i++) {
+            Position pos = new Position((char)i, startingPos.getRow());
+            Cell cell = controller.getCell(pos);
+
+            if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
+                isValid = false;
+                isPieceFound = true;
+            }
+        }
+
+        return isValid;
     }
 
 

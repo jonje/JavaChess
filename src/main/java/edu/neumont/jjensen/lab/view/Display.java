@@ -18,13 +18,13 @@ public class Display {
     }
 
     public void displayBoard() {
-        for(int j = 0; j < controller.getBoardSize(); j++) {
+        for(int row = 0; row < controller.getBoardSize(); row++) {
             String output = "";
-            for(int i =0; i < controller.getBoardSize(); i++) {
+            for(int column =0; column < controller.getBoardSize(); column++) {
 
-                Cell cell = controller.getCell(new Position((char)j, (char)i));
+                Cell cell = controller.getCell(new Position(column, row));
 
-                String emptyCell =  "[ - ]";
+                String emptyCell = "[ - ]";
 
                  output += (cell.isOccupied()) ?  "[ " + cell.getPiece().getAsciiImage() + " ]" :  emptyCell;
 

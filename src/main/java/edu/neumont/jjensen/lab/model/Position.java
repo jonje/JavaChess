@@ -16,21 +16,29 @@ public class Position {
         this.column = key.charAt(0);
     }
 
-    public Position(char row, char column) {
+    public Position(char column, char row) {
+        this.column = column;
+        this.row = row;
+
+
+
+    }
+
+    public Position(int column, int row) {
         int columnInt = column + 'A';
         int rowInt = row + '1';
 
         this.column = (char)columnInt;
         this.row = (char)rowInt;
-
     }
+
 
 
     public char getColumn() {
         return column;
     }
 
-    public int getRow(){
+    public char getRow(){
         return row;
     }
 
