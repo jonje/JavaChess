@@ -4,6 +4,7 @@ import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Cell;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
+import edu.neumont.jjensen.lab.model.TeamColor;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,23 +43,53 @@ public class Pawn extends Piece {
     }
 
     private boolean isValidDistance(Position srcPos, Position destPos) {
-        boolean isValid = false;
+        boolean isValid;
         int difference = srcPos.getRowDifference(destPos);
+        if(this.getColor().equals(TeamColor.WHITE)) {
+            isValid = isValidForWhite(difference);
 
+        } else {
+            isValid = isValidForBlack(difference);
+
+        }
+
+        return isValid;
+
+    }
+
+    private boolean isValidForWhite(int difference) {
+        boolean isValid = false;
         if(isFirstTurn) {
-            if(difference <= 2 && difference >= -2) {
+            if(difference <= 2 && difference > 0) {
                 isValid = true;
 
             }
 
         } else {
-            if(difference <= 1 && difference >= -1) {
+            if(difference <= 1 && difference > 0) {
                 isValid = true;
 
             }
         }
         return isValid;
 
+    }
+
+    private boolean isValidForBlack(int difference) {
+        boolean isValid = false;
+        if(isFirstTurn) {
+            if(difference >= -2 && difference < 0) {
+                isValid = true;
+
+            }
+
+        } else {
+            if(difference >= -1 && difference < 0) {
+                isValid = true;
+
+            }
+        }
+        return isValid;
     }
 
 }
