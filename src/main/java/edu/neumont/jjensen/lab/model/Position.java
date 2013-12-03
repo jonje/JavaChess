@@ -87,6 +87,10 @@ public class Position {
         return (this.getRow() > pos.getRow()) ? this : pos;
     }
 
+    public int getPawnDifference(Position pos) {
+        return this.getRow() - pos.getRow();
+    }
+
     public Position getLargestPosition(Position pos) {
         return (this.getColumn() > pos.getColumn() && this.getRow() > pos.getRow()) ? this : pos;
     }

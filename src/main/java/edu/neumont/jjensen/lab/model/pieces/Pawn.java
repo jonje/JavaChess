@@ -44,7 +44,7 @@ public class Pawn extends Piece {
 
     private boolean isValidDistance(Position srcPos, Position destPos) {
         boolean isValid;
-        int difference = srcPos.getRowDifference(destPos);
+        int difference = srcPos.getPawnDifference(destPos);
         if(this.getColor().equals(TeamColor.WHITE)) {
             isValid = isValidForWhite(difference);
 
@@ -66,7 +66,7 @@ public class Pawn extends Piece {
             }
 
         } else {
-            if(difference <= 1 && difference > 0) {
+            if(difference <= -1 && difference > 0) {
                 isValid = true;
 
             }
@@ -84,7 +84,7 @@ public class Pawn extends Piece {
             }
 
         } else {
-            if(difference >= -1 && difference < 0) {
+            if(difference >= 1 && difference < 0) {
                 isValid = true;
 
             }
