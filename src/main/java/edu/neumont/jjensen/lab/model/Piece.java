@@ -2,6 +2,8 @@ package edu.neumont.jjensen.lab.model;
 
 import edu.neumont.jjensen.lab.controller.Controller;
 
+import java.util.Iterator;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjesnen
@@ -57,6 +59,7 @@ public abstract class Piece {
     }
 
     public abstract Piece getInstance();
+    public abstract Iterator<String> getMovesList(Position srcPos, Position destPos, Controller controller);
 
     public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);
 }
