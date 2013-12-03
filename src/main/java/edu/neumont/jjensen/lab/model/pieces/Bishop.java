@@ -23,7 +23,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
-        boolean isValid = true;
+        boolean isValid;
         if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) && isTeamsTurn(controller)) {
             isValid = isPieceNotInPath(srcPos, destPos, controller);
 

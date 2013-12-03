@@ -56,11 +56,11 @@ public class Position {
     }
 
     public int getRowDifference(Position pos2) {
-        return this.getRow() - pos2.getRow();
+        return Math.abs(this.getRow() - pos2.getRow());
     }
 
     public int getColumnDifference(Position pos2) {
-        return this.getColumn() - pos2.getColumn();
+        return Math.abs(this.getColumn() - pos2.getColumn());
     }
 
     public boolean isSameColumn(Position destPos) {
