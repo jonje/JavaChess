@@ -26,52 +26,83 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Position destPos, Controller controller) {
+    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
         ArrayList<String> possibleMoves = new ArrayList<>();
-        possibleMoves.addAll(getColumnMoves(srcPos, destPos, controller));
-        possibleMoves.addAll(getRowMoves(srcPos, destPos, controller));
+        possibleMoves.addAll(getColumnMoves(srcPos, controller));
+        possibleMoves.addAll(getRowMoves(srcPos, controller));
 
         return possibleMoves.iterator();
     }
 
-    private ArrayList<String> getColumnMoves(Position srcPos, Position destPos, Controller controller) {
+    private ArrayList<String> getColumnMoves(Position srcPos, Controller controller) {
         boolean isPieceFound = false;
         ArrayList<String> columnMoves = new ArrayList<>();
-        Position startingPos = srcPos.getSmallestPositionByColumn(destPos);
-        Position endingPos = srcPos.getLargestPositionByColumn(destPos);
 
-        for(int i = startingPos.getColumn() + 1; i < endingPos.getColumn() && !isPieceFound; i++) {
-            Position tempPos = new Position((char)i, startingPos.getRow());
+
+        for(int i = srcPos.getColumnAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
+            Position tempPos = new Position(i, srcPos.getRowAsIndex());
             Cell cell = controller.getCell(tempPos);
 
             if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
                 isPieceFound = true;
 
+            } else {
+                columnMoves.add(tempPos.toString());
             }
 
-            columnMoves.add(tempPos.toString());
+
+        }
+
+        for(int i = srcPos.getColumnAsIndex() - 1; i >= 0 && !isPieceFound; i--) {
+            Position tempPos = new Position(i, srcPos.getRowAsIndex());
+            Cell cell = controller.getCell(tempPos);
+
+            if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
+                isPieceFound = true;
+
+            } else {
+                columnMoves.add(tempPos.toString());
+            }
+
+
         }
 
         return columnMoves;
 
     }
 
-    private ArrayList<String> getRowMoves(Position srcPos, Position destPos, Controller controller) {
+    private ArrayList<String> getRowMoves(Position srcPos, Controller controller) {
         ArrayList<String> rowMoves = new ArrayList<>();
         boolean isPieceFound = false;
-        Position startingPos = srcPos.getSmallestPositionByRow(destPos);
-        Position endingPos = srcPos.getLargestPositionByRow(destPos);
 
-        for(int i = startingPos.getRow() + 1; i < endingPos.getRow() && !isPieceFound; i++) {
-            Position tempPos = new Position("" + startingPos.getColumn() + (char)i);
+        for(int i = srcPos.getRowAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
+            Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
             Cell cell = controller.getCell(tempPos);
 
             if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
 
                 isPieceFound = true;
 
+            } else {
+                rowMoves.add(tempPos.toString());
             }
-            rowMoves.add(tempPos.toString());
+
+
+        }
+
+        isPieceFound = false;
+        for(int i = srcPos.getRowAsIndex() - 1; i >= 0 && !isPieceFound; i--) {
+            Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
+            Cell cell = controller.getCell(tempPos);
+
+            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
+
+                isPieceFound = true;
+
+            } else {
+                rowMoves.add(tempPos.toString());
+            }
+
 
         }
 

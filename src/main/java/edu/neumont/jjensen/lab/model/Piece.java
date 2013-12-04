@@ -59,7 +59,7 @@ public abstract class Piece {
     }
 
     public abstract Piece getInstance();
-    public abstract Iterator<String> getMovesList(Position srcPos, Position destPos, Controller controller);
+    public abstract Iterator<String> getMovesList(Position srcPos, Controller controller);
 
     public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);
 }

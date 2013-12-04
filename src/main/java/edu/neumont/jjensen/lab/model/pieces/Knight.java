@@ -4,6 +4,8 @@ import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
+import java.util.Iterator;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjensen
@@ -19,6 +21,11 @@ public class Knight extends Piece {
     @Override
     public Knight getInstance() {
         return new Knight();
+    }
+
+    @Override
+    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

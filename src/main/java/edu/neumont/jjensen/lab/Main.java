@@ -1,6 +1,10 @@
 package edu.neumont.jjensen.lab;
 
+import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
 import edu.neumont.jjensen.lab.view.Display;
+
+import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +19,13 @@ public class Main {
         for(String argument: args) {
             inputReader.readInFile(argument);
 
+        }
+
+        Piece rook = display.getController().getCell(new Position('A', '8')).getPiece();
+        Iterator<String> moves = rook.getMovesList(new Position('A', '8'), display.getController());
+
+        while(moves.hasNext()) {
+            System.out.println(moves.next());
         }
 
 
