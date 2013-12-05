@@ -21,8 +21,8 @@ public class Main {
 
         }
 
-        Piece bishop = display.getController().getCell(new Position('C', '8')).getPiece();
-        Iterator<String> moves = bishop.getMovesList(new Position('C', '8'), display.getController());
+        Piece bishop = display.getController().getCell(new Position('B', '8')).getPiece();
+        Iterator<String> moves = bishop.getMovesList(new Position('B', '8'), display.getController());
 
         while(moves.hasNext()) {
             System.out.println(moves.next());
