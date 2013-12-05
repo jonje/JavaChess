@@ -41,27 +41,32 @@ public class Rook extends Piece {
 
         for(int i = srcPos.getColumnAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
             Position tempPos = new Position(i, srcPos.getRowAsIndex());
-            Cell cell = controller.getCell(tempPos);
+            if(isInBoardBounds(tempPos, controller)) {
+                Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
+                if(cell.isOccupied()) {
+                    isPieceFound = true;
 
-            } else {
-                columnMoves.add(tempPos.toString());
+                } else {
+                    columnMoves.add(tempPos.toString());
+                }
             }
+
 
 
         }
 
         for(int i = srcPos.getColumnAsIndex() - 1; i >= 0 && !isPieceFound; i--) {
             Position tempPos = new Position(i, srcPos.getRowAsIndex());
-            Cell cell = controller.getCell(tempPos);
+            if(isInBoardBounds(tempPos, controller)) {
+                Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
+                if(cell.isOccupied()) {
+                    isPieceFound = true;
 
-            } else {
-                columnMoves.add(tempPos.toString());
+                } else {
+                    columnMoves.add(tempPos.toString());
+                }
             }
 
 
@@ -69,6 +74,10 @@ public class Rook extends Piece {
 
         return columnMoves;
 
+    }
+
+    private boolean isInBoardBounds(Position srcPos, Controller controller) {
+        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < controller.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < controller.getBoardSize()));
     }
 
     private ArrayList<String> getRowMoves(Position srcPos, Controller controller) {
@@ -95,7 +104,7 @@ public class Rook extends Piece {
             Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
+            if(cell.isOccupied()) {
 
                 isPieceFound = true;
 

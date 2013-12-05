@@ -4,7 +4,9 @@ import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,7 +27,19 @@ public class Queen extends Piece {
 
     @Override
     public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<String> moves = new ArrayList<>();
+
+        Iterator<String> iterator = new Bishop().getMovesList(srcPos, controller);
+        while(iterator.hasNext()) {
+            moves.add(iterator.next());
+        }
+
+        iterator = new Rook().getMovesList(srcPos, controller);
+        while(iterator.hasNext()) {
+            moves.add(iterator.next());
+        }
+
+        return moves.iterator();
     }
 
     @Override

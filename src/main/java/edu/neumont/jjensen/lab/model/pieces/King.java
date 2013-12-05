@@ -1,10 +1,13 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.NewPositionCreator;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,8 +17,10 @@ import java.util.Iterator;
  */
 public class King extends Piece {
     private final int MAX_MOVE = 1;
+    private List<NewPositionCreator> positionCreators;
     public King() {
         asciiLetter = "k";
+        setupPositionCreators();
 
 
     }
@@ -27,7 +32,17 @@ public class King extends Piece {
 
     @Override
     public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<String> moves = new ArrayList<>();
+
+        for(NewPositionCreator positionCreator : positionCreators) {
+            Position tempPos = positionCreator.getNewPosition(srcPos);
+
+            if(isInBoardBounds(tempPos, controller) && !controller.getCell(tempPos).isOccupied()) {
+                moves.add(tempPos.toString());
+
+            }
+        }
+        return moves.iterator();
     }
 
     @Override
@@ -39,5 +54,21 @@ public class King extends Piece {
 
     private boolean isInBounds(int difference) {
         return (difference <= MAX_MOVE && difference >= -MAX_MOVE);
+    }
+
+    private boolean isInBoardBounds(Position srcPos, Controller controller) {
+        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < controller.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < controller.getBoardSize()));
+    }
+
+    private void setupPositionCreators() {
+        positionCreators = new ArrayList<>();
+        positionCreators.add(new NewPositionCreator(1, 0));
+        positionCreators.add(new NewPositionCreator(0, 1));
+        positionCreators.add(new NewPositionCreator(-1, 0));
+        positionCreators.add(new NewPositionCreator(0, -1));
+        positionCreators.add(new NewPositionCreator(1, 1));
+        positionCreators.add(new NewPositionCreator(1, -1));
+        positionCreators.add(new NewPositionCreator(-1, 1));
+        positionCreators.add(new NewPositionCreator(-1, -1));
     }
 }

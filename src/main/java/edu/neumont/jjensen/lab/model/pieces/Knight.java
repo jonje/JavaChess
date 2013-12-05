@@ -1,7 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.controller.Controller;
-import edu.neumont.jjensen.lab.model.NewKnightPositionCreator;
+import edu.neumont.jjensen.lab.model.NewPositionCreator;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * Time: 2:41 PM
  */
 public class Knight extends Piece {
-    private List<NewKnightPositionCreator> knightPositionCreators;
+    private List<NewPositionCreator> knightPositionCreators;
 
     public Knight() {
         asciiLetter = "n";
@@ -33,7 +33,7 @@ public class Knight extends Piece {
     public Iterator<String> getMovesList(Position srcPos, Controller controller) {
         List<String> moves = new ArrayList<>();
         Position tempPos;
-        for(NewKnightPositionCreator creator : knightPositionCreators) {
+        for(NewPositionCreator creator : knightPositionCreators) {
             tempPos = creator.getNewPosition(srcPos);
 
             if(isInBounds(tempPos, 0, controller.getBoardSize())) {
@@ -64,14 +64,14 @@ public class Knight extends Piece {
     private void setupKnightPositionCreators() {
         knightPositionCreators = new ArrayList<>();
 
-        knightPositionCreators.add(new NewKnightPositionCreator(1, 2));
-        knightPositionCreators.add(new NewKnightPositionCreator(2, 1));
-        knightPositionCreators.add(new NewKnightPositionCreator(-1, -2));
-        knightPositionCreators.add(new NewKnightPositionCreator(-2, -1));
-        knightPositionCreators.add(new NewKnightPositionCreator(1, -2));
-        knightPositionCreators.add(new NewKnightPositionCreator(-2, 1));
-        knightPositionCreators.add(new NewKnightPositionCreator(-1, 2));
-        knightPositionCreators.add(new NewKnightPositionCreator(2, -1));
+        knightPositionCreators.add(new NewPositionCreator(1, 2));
+        knightPositionCreators.add(new NewPositionCreator(2, 1));
+        knightPositionCreators.add(new NewPositionCreator(-1, -2));
+        knightPositionCreators.add(new NewPositionCreator(-2, -1));
+        knightPositionCreators.add(new NewPositionCreator(1, -2));
+        knightPositionCreators.add(new NewPositionCreator(-2, 1));
+        knightPositionCreators.add(new NewPositionCreator(-1, 2));
+        knightPositionCreators.add(new NewPositionCreator(2, -1));
 
     }
 }

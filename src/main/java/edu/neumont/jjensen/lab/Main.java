@@ -20,9 +20,9 @@ public class Main {
             inputReader.readInFile(argument);
 
         }
-
-        Piece bishop = display.getController().getCell(new Position('B', '8')).getPiece();
-        Iterator<String> moves = bishop.getMovesList(new Position('B', '8'), display.getController());
+         display.displayBoard();
+        Piece bishop = display.getController().getCell(new Position('D', '8')).getPiece();
+        Iterator<String> moves = bishop.getMovesList(new Position('D', '8'), display.getController());
 
         while(moves.hasNext()) {
             System.out.println(moves.next());

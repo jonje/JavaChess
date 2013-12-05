@@ -1,12 +1,11 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
 import edu.neumont.jjensen.lab.controller.Controller;
-import edu.neumont.jjensen.lab.model.Cell;
-import edu.neumont.jjensen.lab.model.Piece;
-import edu.neumont.jjensen.lab.model.Position;
-import edu.neumont.jjensen.lab.model.TeamColor;
+import edu.neumont.jjensen.lab.model.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +27,13 @@ public class Pawn extends Piece {
 
     @Override
     public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<String> moves = new ArrayList<>();
+        Position tempPos = new NewPositionCreator(0,1).getNewPosition(srcPos);
+
+        if(isMoveValid(srcPos, tempPos, controller)) {
+            moves.add(tempPos.toString());
+        }
+        return moves.iterator();
     }
 
     @Override

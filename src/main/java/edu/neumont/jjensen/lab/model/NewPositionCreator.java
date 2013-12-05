@@ -6,11 +6,11 @@ package edu.neumont.jjensen.lab.model;
  * Date: 12/4/13
  * Time: 3:27 PM
  */
-public class NewKnightPositionCreator {
+public class NewPositionCreator {
     private int columnIncreaser;
     private int rowIncreaser;
 
-    public NewKnightPositionCreator(int columnIncreaser, int rowIncreaser) {
+    public NewPositionCreator(int columnIncreaser, int rowIncreaser) {
         this.columnIncreaser = columnIncreaser;
         this.rowIncreaser = rowIncreaser;
 
