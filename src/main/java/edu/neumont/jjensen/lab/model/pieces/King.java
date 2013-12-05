@@ -31,14 +31,14 @@ public class King extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        List<String> moves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        List<Position> moves = new ArrayList<>();
 
         for(NewPositionCreator positionCreator : positionCreators) {
             Position tempPos = positionCreator.getNewPosition(srcPos);
 
             if(isInBoardBounds(tempPos, controller) && !controller.getCell(tempPos).isOccupied()) {
-                moves.add(tempPos.toString());
+                moves.add(tempPos);
 
             }
         }

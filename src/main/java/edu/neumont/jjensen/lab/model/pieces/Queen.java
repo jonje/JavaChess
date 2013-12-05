@@ -26,10 +26,10 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        List<String> moves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        List<Position> moves = new ArrayList<>();
 
-        Iterator<String> iterator = new Bishop().getMovesList(srcPos, controller);
+        Iterator<Position> iterator = new Bishop().getMovesList(srcPos, controller);
         while(iterator.hasNext()) {
             moves.add(iterator.next());
         }

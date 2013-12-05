@@ -25,17 +25,17 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        ArrayList<String> moves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        ArrayList<Position> moves = new ArrayList<>();
         moves.addAll(getForwardMoves(srcPos, controller));
         moves.addAll(getBackwardMoves(srcPos, controller));
         moves.addAll(getOppositeDirection(srcPos, controller));
         return moves.iterator();
     }
 
-    private ArrayList<String> getForwardMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getForwardMoves(Position srcPos, Controller controller) {
         boolean isPieceFound = false;
-        ArrayList<String> forwardMoves = new ArrayList<>();
+        ArrayList<Position> forwardMoves = new ArrayList<>();
 
         int rowCounter = srcPos.getRowAsIndex() + 1;
 
@@ -43,21 +43,17 @@ public class Bishop extends Piece {
             Position tempPos = new Position(i, rowCounter);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
-
-            } else {
-                forwardMoves.add(tempPos.toString());
-            }
+            isPieceFound = cell.isOccupied();
+            forwardMoves.add(tempPos);
 
         }
 
         return forwardMoves;
     }
 
-    private ArrayList<String> getBackwardMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getBackwardMoves(Position srcPos, Controller controller) {
         boolean isPieceFound = false;
-        ArrayList<String> backwardMoves = new ArrayList<>();
+        ArrayList<Position> backwardMoves = new ArrayList<>();
 
         int rowCounter = srcPos.getRowAsIndex() - 1;
 
@@ -65,21 +61,18 @@ public class Bishop extends Piece {
             Position tempPos = new Position(i, rowCounter);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
+            isPieceFound = cell.isOccupied();
+            backwardMoves.add(tempPos);
 
-            } else {
-                backwardMoves.add(tempPos.toString());
-            }
 
         }
 
         return backwardMoves;
     }
 
-    private ArrayList<String> getOppositeDirection(Position srcPos, Controller controller) {
+    private ArrayList<Position> getOppositeDirection(Position srcPos, Controller controller) {
         boolean isPieceFound = false;
-        ArrayList<String> moves = new ArrayList<>();
+        ArrayList<Position> moves = new ArrayList<>();
 
         int rowCounter = srcPos.getRowAsIndex() - 1;
 
@@ -87,12 +80,8 @@ public class Bishop extends Piece {
             Position tempPos = new Position(i, rowCounter);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
-
-            } else {
-                moves.add(tempPos.toString());
-            }
+            isPieceFound = cell.isOccupied();
+            moves.add(tempPos);
 
         }
 
@@ -103,12 +92,8 @@ public class Bishop extends Piece {
             Position tempPos = new Position(i, rowCounter);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-                isPieceFound = true;
-
-            } else {
-                moves.add(tempPos.toString());
-            }
+            isPieceFound = cell.isOccupied();
+            moves.add(tempPos);
 
         }
 

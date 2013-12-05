@@ -26,17 +26,17 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        ArrayList<String> possibleMoves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        ArrayList<Position> possibleMoves = new ArrayList<>();
         possibleMoves.addAll(getColumnMoves(srcPos, controller));
         possibleMoves.addAll(getRowMoves(srcPos, controller));
 
         return possibleMoves.iterator();
     }
 
-    private ArrayList<String> getColumnMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getColumnMoves(Position srcPos, Controller controller) {
         boolean isPieceFound = false;
-        ArrayList<String> columnMoves = new ArrayList<>();
+        ArrayList<Position> columnMoves = new ArrayList<>();
 
 
         for(int i = srcPos.getColumnAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
@@ -44,15 +44,10 @@ public class Rook extends Piece {
             if(isInBoardBounds(tempPos, controller)) {
                 Cell cell = controller.getCell(tempPos);
 
-                if(cell.isOccupied()) {
-                    isPieceFound = true;
+                    isPieceFound = cell.isOccupied();
+                    columnMoves.add(tempPos);
 
-                } else {
-                    columnMoves.add(tempPos.toString());
-                }
             }
-
-
 
         }
 
@@ -60,13 +55,9 @@ public class Rook extends Piece {
             Position tempPos = new Position(i, srcPos.getRowAsIndex());
             if(isInBoardBounds(tempPos, controller)) {
                 Cell cell = controller.getCell(tempPos);
+                    isPieceFound = cell.isOccupied();
+                    columnMoves.add(tempPos);
 
-                if(cell.isOccupied()) {
-                    isPieceFound = true;
-
-                } else {
-                    columnMoves.add(tempPos.toString());
-                }
             }
 
 
@@ -80,22 +71,16 @@ public class Rook extends Piece {
         return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < controller.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < controller.getBoardSize()));
     }
 
-    private ArrayList<String> getRowMoves(Position srcPos, Controller controller) {
-        ArrayList<String> rowMoves = new ArrayList<>();
+    private ArrayList<Position> getRowMoves(Position srcPos, Controller controller) {
+        ArrayList<Position> rowMoves = new ArrayList<>();
         boolean isPieceFound = false;
 
         for(int i = srcPos.getRowAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
             Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
-
-                isPieceFound = true;
-
-            } else {
-                rowMoves.add(tempPos.toString());
-            }
-
+                isPieceFound = cell.isOccupied();
+                rowMoves.add(tempPos);
 
         }
 
@@ -104,15 +89,8 @@ public class Rook extends Piece {
             Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
             Cell cell = controller.getCell(tempPos);
 
-            if(cell.isOccupied()) {
-
-                isPieceFound = true;
-
-            } else {
-                rowMoves.add(tempPos.toString());
-            }
-
-
+            isPieceFound = cell.isOccupied();
+            rowMoves.add(tempPos);
         }
 
         return rowMoves;

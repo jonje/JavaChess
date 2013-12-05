@@ -26,12 +26,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        List<String> moves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        List<Position> moves = new ArrayList<>();
         Position tempPos = new NewPositionCreator(0,1).getNewPosition(srcPos);
 
         if(isMoveValid(srcPos, tempPos, controller)) {
-            moves.add(tempPos.toString());
+            moves.add(tempPos);
         }
         return moves.iterator();
     }

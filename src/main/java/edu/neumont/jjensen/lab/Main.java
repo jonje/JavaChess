@@ -1,10 +1,6 @@
 package edu.neumont.jjensen.lab;
 
-import edu.neumont.jjensen.lab.model.Piece;
-import edu.neumont.jjensen.lab.model.Position;
 import edu.neumont.jjensen.lab.view.Display;
-
-import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,13 +16,8 @@ public class Main {
             inputReader.readInFile(argument);
 
         }
-         display.displayBoard();
-        Piece bishop = display.getController().getCell(new Position('D', '8')).getPiece();
-        Iterator<String> moves = bishop.getMovesList(new Position('D', '8'), display.getController());
+        display.displayBoard();
 
-        while(moves.hasNext()) {
-            System.out.println(moves.next());
-        }
 
 
     }

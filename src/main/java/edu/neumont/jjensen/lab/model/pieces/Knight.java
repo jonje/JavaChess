@@ -30,14 +30,14 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Iterator<String> getMovesList(Position srcPos, Controller controller) {
-        List<String> moves = new ArrayList<>();
+    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+        List<Position> moves = new ArrayList<>();
         Position tempPos;
         for(NewPositionCreator creator : knightPositionCreators) {
             tempPos = creator.getNewPosition(srcPos);
 
             if(isInBounds(tempPos, 0, controller.getBoardSize())) {
-                moves.add(tempPos.toString());
+                moves.add(tempPos);
             }
 
 

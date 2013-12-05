@@ -5,6 +5,7 @@ import edu.neumont.jjensen.lab.model.*;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -104,6 +105,44 @@ public class MoveInterpreter {
         }
     }
 
+    private boolean isKingInCheck(TeamColor color) {
+        boolean kingInCheck = false;
+        for(int column = 0; !kingInCheck && column < controller.getBoardSize(); column++) {
+            for(int row = 0; !kingInCheck && row < controller.getBoardSize(); row++) {
+                Position pos = new Position(column, row);
+                Cell cell = controller.getCell(pos);
+                if(cell.isOccupied()) {
+                    Piece piece = cell.getPiece();
+                    Iterator<Position> iterator = piece.getMovesList(pos, controller);
+
+                    while(iterator.hasNext() && !kingInCheck) {
+                        Position pos2 = iterator.next();
+                        kingInCheck = isKingInCell(pos2);
+                        //output(pos2.toString());
+
+                    }
+                }
+            }
+        }
+
+        return kingInCheck;
+    }
+
+    private boolean isKingInCell(Position pos) {
+        boolean kingFound = false;
+        Cell cell = controller.getCell(pos);
+        if(cell.isOccupied()) {
+            Piece piece = cell.getPiece();
+            if(piece instanceof King) {
+                kingFound = true;
+
+            }
+
+        }
+        return kingFound;
+    }
+
+
     private void movePiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
 
@@ -114,7 +153,9 @@ public class MoveInterpreter {
                 Position pos2Key = new Position(matcher.group("pos2").toUpperCase());
 
                 Cell srcCell = controller.getCell(pos1Key);
-
+                 if(isKingInCheck(controller.getCurrentPlayer().getTeamColor())) {
+                     output("King in check");
+                 }
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
