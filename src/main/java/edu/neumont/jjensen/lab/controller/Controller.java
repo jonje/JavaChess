@@ -42,5 +42,13 @@ public class Controller {
         return game.getCurrentPlayer();
     }
 
+    public boolean isKingInCheck() {
+        return game.isCurrentKingInCheck();
+    }
+
+    public void setKingInCheck(boolean inCheck) {
+        game.setCurrentKingInCheck(inCheck);
+    }
+
 
 }

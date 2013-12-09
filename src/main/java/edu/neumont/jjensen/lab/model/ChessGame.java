@@ -11,6 +11,7 @@ public class ChessGame {
     private Player whitePlayer;
     private Player blackPlayer;
     private Player currentPlayer;
+    private boolean currentKingInCheck;
 
     public ChessGame() {
         board = new Board();
@@ -37,6 +38,11 @@ public class ChessGame {
 
     }
 
+    public boolean isCurrentKingInCheck() {
+        return currentKingInCheck;
+    }
 
-
+    public void setCurrentKingInCheck(boolean currentKingInCheck) {
+        this.currentKingInCheck = currentKingInCheck;
+    }
 }

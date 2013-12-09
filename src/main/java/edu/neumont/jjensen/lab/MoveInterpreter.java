@@ -79,9 +79,9 @@ public class MoveInterpreter {
         matchFound = false;
         castleingPerformed = false;
 
-        for(int i = 0; i < patternMatchers.length; i++) {
-            
-            patternMatchers[i].performAction(move, patternMatchers[i]);
+        for (PatternMatcher patternMatcher : patternMatchers) {
+
+            patternMatcher.performAction(move, patternMatcher);
         }
 
         if(!matchFound) {
@@ -154,6 +154,9 @@ public class MoveInterpreter {
                 Cell srcCell = controller.getCell(pos1Key);
                  if(isKingInCheck(controller.getCurrentPlayer().getTeamColor())) {
                      output("King in check");
+                     controller.setKingInCheck(true);
+                 } else {
+                     controller.setKingInCheck(false);
                  }
 
                 if(srcCell.isOccupied()) {
@@ -179,6 +182,26 @@ public class MoveInterpreter {
         }
 
 
+    }
+
+    private boolean isKingProtectable(Controller controller) {
+        if(controller.isKingInCheck()) {
+            for(int column = 0; column < controller.getBoardSize(); column++) {
+                for(int row = 0; row < controller.getBoardSize(); row++) {
+
+                    Position tempPos = new Position(column, row);
+                    Cell cell = controller.getCell(tempPos);
+                    if(cell.isOccupied()) {
+                        Piece piece = cell.getPiece();
+                        if(piece.getColor().equals(controller.getCurrentPlayer().getTeamColor())) {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private void capturePiece(String move, PatternMatcher patternMatcher) {
