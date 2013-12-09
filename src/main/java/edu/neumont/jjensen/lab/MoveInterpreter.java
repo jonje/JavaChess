@@ -194,6 +194,7 @@ public class MoveInterpreter {
                     if(cell.isOccupied()) {
                         Piece piece = cell.getPiece();
                         if(piece.getColor().equals(controller.getCurrentPlayer().getTeamColor())) {
+                            tryMoves(tempPos, piece, controller);
 
                         }
                     }
@@ -202,6 +203,13 @@ public class MoveInterpreter {
         }
 
         return false;
+    }
+
+    private void tryMoves(Position tempPos, Piece piece, Controller controller) {
+        Iterator<Position> moves = piece.getMovesList(tempPos, controller);
+        while (moves.hasNext()) {
+
+        }
     }
 
     private void capturePiece(String move, PatternMatcher patternMatcher) {
