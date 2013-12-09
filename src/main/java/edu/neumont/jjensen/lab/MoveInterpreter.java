@@ -113,13 +113,12 @@ public class MoveInterpreter {
                 Cell cell = controller.getCell(pos);
                 if(cell.isOccupied()) {
                     Piece piece = cell.getPiece();
+
                     Iterator<Position> iterator = piece.getMovesList(pos, controller);
 
                     while(iterator.hasNext() && !kingInCheck) {
                         Position pos2 = iterator.next();
-                        kingInCheck = isKingInCell(pos2);
-                        //output(pos2.toString());
-
+                        kingInCheck = isKingInCell(pos2, color);
                     }
                 }
             }
@@ -128,12 +127,12 @@ public class MoveInterpreter {
         return kingInCheck;
     }
 
-    private boolean isKingInCell(Position pos) {
+    private boolean isKingInCell(Position pos, TeamColor color) {
         boolean kingFound = false;
         Cell cell = controller.getCell(pos);
         if(cell.isOccupied()) {
             Piece piece = cell.getPiece();
-            if(piece instanceof King) {
+            if(piece instanceof King && piece.getColor().equals(color)) {
                 kingFound = true;
 
             }
@@ -175,9 +174,6 @@ public class MoveInterpreter {
                 } else {
                     output("No piece at " + pos1Key + NEWLINE);
                 }
-
-
-
 
             }
         }
