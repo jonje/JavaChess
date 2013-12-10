@@ -1,6 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.NewPositionCreator;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
@@ -31,13 +31,13 @@ public class King extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         List<Position> moves = new ArrayList<>();
 
         for(NewPositionCreator positionCreator : positionCreators) {
             Position tempPos = positionCreator.getNewPosition(srcPos);
 
-            if(isInBoardBounds(tempPos, controller) && !controller.getCell(tempPos).isOccupied()) {
+            if(isInBoardBounds(tempPos, game) && !game.getCell(tempPos).isOccupied()) {
                 moves.add(tempPos);
 
             }
@@ -46,18 +46,18 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
         int differenceInRows = srcPos.getRowDifference(destPos);
         int differenceInColumns = srcPos.getColumnDifference(destPos);
-        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns) && isTeamsTurn(controller));
+        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns) && isTeamsTurn(game));
     }
 
     private boolean isInBounds(int difference) {
         return (difference <= MAX_MOVE && difference >= -MAX_MOVE);
     }
 
-    private boolean isInBoardBounds(Position srcPos, Controller controller) {
-        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < controller.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < controller.getBoardSize()));
+    private boolean isInBoardBounds(Position srcPos, ChessGame game) {
+        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < game.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < game.getBoardSize()));
     }
 
     private void setupPositionCreators() {

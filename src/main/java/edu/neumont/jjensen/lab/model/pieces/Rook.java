@@ -1,7 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Cell;
+import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -26,23 +26,23 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         ArrayList<Position> possibleMoves = new ArrayList<>();
-        possibleMoves.addAll(getColumnMoves(srcPos, controller));
-        possibleMoves.addAll(getRowMoves(srcPos, controller));
+        possibleMoves.addAll(getColumnMoves(srcPos, game));
+        possibleMoves.addAll(getRowMoves(srcPos, game));
 
         return possibleMoves.iterator();
     }
 
-    private ArrayList<Position> getColumnMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getColumnMoves(Position srcPos, ChessGame game) {
         boolean isPieceFound = false;
         ArrayList<Position> columnMoves = new ArrayList<>();
 
 
-        for(int i = srcPos.getColumnAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
+        for(int i = srcPos.getColumnAsIndex() + 1; i < game.getBoardSize() && !isPieceFound; i++) {
             Position tempPos = new Position(i, srcPos.getRowAsIndex());
-            if(isInBoardBounds(tempPos, controller)) {
-                Cell cell = controller.getCell(tempPos);
+            if(isInBoardBounds(tempPos, game)) {
+                Cell cell = game.getCell(tempPos);
 
                     isPieceFound = cell.isOccupied();
                     columnMoves.add(tempPos);
@@ -53,8 +53,8 @@ public class Rook extends Piece {
 
         for(int i = srcPos.getColumnAsIndex() - 1; i >= 0 && !isPieceFound; i--) {
             Position tempPos = new Position(i, srcPos.getRowAsIndex());
-            if(isInBoardBounds(tempPos, controller)) {
-                Cell cell = controller.getCell(tempPos);
+            if(isInBoardBounds(tempPos, game)) {
+                Cell cell = game.getCell(tempPos);
                     isPieceFound = cell.isOccupied();
                     columnMoves.add(tempPos);
 
@@ -67,17 +67,17 @@ public class Rook extends Piece {
 
     }
 
-    private boolean isInBoardBounds(Position srcPos, Controller controller) {
-        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < controller.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < controller.getBoardSize()));
+    private boolean isInBoardBounds(Position srcPos, ChessGame game) {
+        return ((srcPos.getColumnAsIndex() >= 0 && srcPos.getColumnAsIndex() < game.getBoardSize()) && (srcPos.getRowAsIndex() >= 0 && srcPos.getRowAsIndex() < game.getBoardSize()));
     }
 
-    private ArrayList<Position> getRowMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getRowMoves(Position srcPos, ChessGame game) {
         ArrayList<Position> rowMoves = new ArrayList<>();
         boolean isPieceFound = false;
 
-        for(int i = srcPos.getRowAsIndex() + 1; i < controller.getBoardSize() && !isPieceFound; i++) {
+        for(int i = srcPos.getRowAsIndex() + 1; i < game.getBoardSize() && !isPieceFound; i++) {
             Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
                 isPieceFound = cell.isOccupied();
                 rowMoves.add(tempPos);
@@ -87,7 +87,7 @@ public class Rook extends Piece {
         isPieceFound = false;
         for(int i = srcPos.getRowAsIndex() - 1; i >= 0 && !isPieceFound; i--) {
             Position tempPos = new Position(srcPos.getColumnAsIndex(), i);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
             rowMoves.add(tempPos);
@@ -97,14 +97,14 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid;
-        if((srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos) && isTeamsTurn(controller))) {
+        if((srcPos.isSameColumn(destPos) || srcPos.isSameRow(destPos) && !srcPos.equals(destPos) && isTeamsTurn(game))) {
 
             if(srcPos.isSameColumn(destPos)){
-               isValid = isPieceInRowPath(srcPos, destPos, controller);
+               isValid = isPieceInRowPath(srcPos, destPos, game);
             } else {
-                isValid = isPieceInColumnPath(srcPos, destPos, controller);
+                isValid = isPieceInColumnPath(srcPos, destPos, game);
             }
         } else {
             isValid = false;
@@ -117,14 +117,14 @@ public class Rook extends Piece {
 
 
 
-    private boolean isPieceInRowPath(Position srcPos, Position destPos, Controller controller) {
+    private boolean isPieceInRowPath(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid = true;
         boolean isPieceFound = false;
         Position startingPos = srcPos.getSmallestPositionByRow(destPos);
         Position endingPos = srcPos.getLargestPositionByRow(destPos);
 
         for(int i = startingPos.getRow() + 1; i < endingPos.getRow() && !isPieceFound; i++) {
-            Cell cell = controller.getCell(new Position("" + startingPos.getColumn() + (char)i));
+            Cell cell = game.getCell(new Position("" + startingPos.getColumn() + (char)i));
 
             if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
                 isValid = false;
@@ -138,7 +138,7 @@ public class Rook extends Piece {
 
     }
 
-    private boolean isPieceInColumnPath(Position srcPos, Position destPos, Controller controller) {
+    private boolean isPieceInColumnPath(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid = true;
         boolean isPieceFound = false;
 
@@ -147,7 +147,7 @@ public class Rook extends Piece {
 
         for(int i = startingPos.getColumn() + 1; i < endingPos.getColumn() && !isPieceFound; i++) {
             Position pos = new Position((char)i, startingPos.getRow());
-            Cell cell = controller.getCell(pos);
+            Cell cell = game.getCell(pos);
 
             if(cell.isOccupied()  && this.getColor().equals(cell.getPiece().getColor())) {
                 isValid = false;

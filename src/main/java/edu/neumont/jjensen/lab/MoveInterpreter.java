@@ -1,11 +1,13 @@
 package edu.neumont.jjensen.lab;
 
 import edu.neumont.jjensen.lab.controller.Controller;
-import edu.neumont.jjensen.lab.model.*;
+import edu.neumont.jjensen.lab.model.Cell;
+import edu.neumont.jjensen.lab.model.Piece;
+import edu.neumont.jjensen.lab.model.Position;
+import edu.neumont.jjensen.lab.model.TeamColor;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -105,41 +107,6 @@ public class MoveInterpreter {
         }
     }
 
-    private boolean isKingInCheck(TeamColor color) {
-        boolean kingInCheck = false;
-        for(int column = 0; !kingInCheck && column < controller.getBoardSize(); column++) {
-            for(int row = 0; !kingInCheck && row < controller.getBoardSize(); row++) {
-                Position pos = new Position(column, row);
-                Cell cell = controller.getCell(pos);
-                if(cell.isOccupied()) {
-                    Piece piece = cell.getPiece();
-
-                    Iterator<Position> iterator = piece.getMovesList(pos, controller);
-
-                    while(iterator.hasNext() && !kingInCheck) {
-                        Position pos2 = iterator.next();
-                        kingInCheck = isKingInCell(pos2, color);
-                    }
-                }
-            }
-        }
-
-        return kingInCheck;
-    }
-
-    private boolean isKingInCell(Position pos, TeamColor color) {
-        boolean kingFound = false;
-        Cell cell = controller.getCell(pos);
-        if(cell.isOccupied()) {
-            Piece piece = cell.getPiece();
-            if(piece instanceof King && piece.getColor().equals(color)) {
-                kingFound = true;
-
-            }
-
-        }
-        return kingFound;
-    }
 
 
     private void movePiece(String move, PatternMatcher patternMatcher) {
@@ -152,16 +119,13 @@ public class MoveInterpreter {
                 Position pos2Key = new Position(matcher.group("pos2").toUpperCase());
 
                 Cell srcCell = controller.getCell(pos1Key);
-                 if(isKingInCheck(controller.getCurrentPlayer().getTeamColor())) {
+                if(controller.isKingInCheck()) {
                      output("King in check");
-                     controller.setKingInCheck(true);
-                 } else {
-                     controller.setKingInCheck(false);
                  }
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
-                    if(piece.isMoveValid(pos1Key, pos2Key, controller)) {
+                    if(piece.isMoveValid(pos1Key, pos2Key, controller.getGameInstance())) {
                         controller.setPiece(pos2Key, piece);
                         controller.getCell(pos1Key).removePiece();
 
@@ -184,33 +148,7 @@ public class MoveInterpreter {
 
     }
 
-    private boolean isKingProtectable(Controller controller) {
-        if(controller.isKingInCheck()) {
-            for(int column = 0; column < controller.getBoardSize(); column++) {
-                for(int row = 0; row < controller.getBoardSize(); row++) {
 
-                    Position tempPos = new Position(column, row);
-                    Cell cell = controller.getCell(tempPos);
-                    if(cell.isOccupied()) {
-                        Piece piece = cell.getPiece();
-                        if(piece.getColor().equals(controller.getCurrentPlayer().getTeamColor())) {
-                            tryMoves(tempPos, piece, controller);
-
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private void tryMoves(Position tempPos, Piece piece, Controller controller) {
-        Iterator<Position> moves = piece.getMovesList(tempPos, controller);
-        while (moves.hasNext()) {
-
-        }
-    }
 
     private void capturePiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);

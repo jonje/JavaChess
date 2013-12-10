@@ -1,6 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -26,15 +26,15 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         List<Position> moves = new ArrayList<>();
 
-        Iterator<Position> iterator = new Bishop().getMovesList(srcPos, controller);
+        Iterator<Position> iterator = new Bishop().getMovesList(srcPos, game);
         while(iterator.hasNext()) {
             moves.add(iterator.next());
         }
 
-        iterator = new Rook().getMovesList(srcPos, controller);
+        iterator = new Rook().getMovesList(srcPos, game);
         while(iterator.hasNext()) {
             moves.add(iterator.next());
         }
@@ -43,8 +43,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
 
-        return (new Bishop().isMoveValid(srcPos, destPos, controller)) || (new Rook().isMoveValid(srcPos, destPos, controller));
+        return (new Bishop().isMoveValid(srcPos, destPos, game)) || (new Rook().isMoveValid(srcPos, destPos, game));
     }
 }

@@ -14,7 +14,7 @@ public class Controller {
     private Display display;
 
     public Controller(Display display) {
-        game = new ChessGame();
+        game = new ChessGame(this);
         this.display = display;
     }
 
@@ -46,8 +46,8 @@ public class Controller {
         return game.isCurrentKingInCheck();
     }
 
-    public void setKingInCheck(boolean inCheck) {
-        game.setCurrentKingInCheck(inCheck);
+    public ChessGame getGameInstance() {
+        return game;
     }
 
 

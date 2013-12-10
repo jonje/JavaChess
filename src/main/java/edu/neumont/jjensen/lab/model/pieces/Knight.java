@@ -1,6 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
+import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.NewPositionCreator;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
@@ -30,13 +30,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         List<Position> moves = new ArrayList<>();
         Position tempPos;
         for(NewPositionCreator creator : knightPositionCreators) {
             tempPos = creator.getNewPosition(srcPos);
 
-            if(isInBounds(tempPos, 0, controller.getBoardSize())) {
+            if(isInBounds(tempPos, 0, game.getBoardSize())) {
                 moves.add(tempPos);
             }
 
@@ -47,8 +47,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
-        return inBounds(srcPos.getColumnDifference(destPos), srcPos.getRowDifference(destPos)) && isTeamsTurn(controller);
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
+        return inBounds(srcPos.getColumnDifference(destPos), srcPos.getRowDifference(destPos)) && isTeamsTurn(game);
 
     }
 

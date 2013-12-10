@@ -1,6 +1,5 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.*;
 
 import java.util.ArrayList;
@@ -26,21 +25,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         List<Position> moves = new ArrayList<>();
         Position tempPos = new NewPositionCreator(0,1).getNewPosition(srcPos);
 
-        if(isMoveValid(srcPos, tempPos, controller)) {
+        if(isMoveValid(srcPos, tempPos, game)) {
             moves.add(tempPos);
         }
         return moves.iterator();
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid = true;
-        if(((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos) && isTeamsTurn(controller))) {
-            Cell cell = controller.getCell(destPos);
+        if(((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos) && isTeamsTurn(game))) {
+            Cell cell = game.getCell(destPos);
 
             if(cell.isOccupied()) {
                 isValid = false;

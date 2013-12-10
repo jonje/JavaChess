@@ -1,5 +1,8 @@
 package edu.neumont.jjensen.lab.model;
 
+import edu.neumont.jjensen.lab.MoveInterpreter;
+import edu.neumont.jjensen.lab.controller.Controller;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjensen
@@ -11,14 +14,17 @@ public class ChessGame {
     private Player whitePlayer;
     private Player blackPlayer;
     private Player currentPlayer;
-    private boolean currentKingInCheck;
+    private MoveInterpreter moveInterpreter;
+    private Controller controller;
 
-    public ChessGame() {
+    public ChessGame(Controller controller) {
         board = new Board();
-        whitePlayer = new Player(TeamColor.WHITE);
-        blackPlayer = new Player(TeamColor.BLACK);
+        this.controller = controller;
+        whitePlayer = new Player(TeamColor.WHITE, this);
+        blackPlayer = new Player(TeamColor.BLACK, this);
 
         currentPlayer = whitePlayer;
+        moveInterpreter = new MoveInterpreter(controller);
     }
 
     public Cell getCell(Position key) {
@@ -39,10 +45,14 @@ public class ChessGame {
     }
 
     public boolean isCurrentKingInCheck() {
-        return currentKingInCheck;
+        return currentPlayer.isKingInCheck();
     }
 
-    public void setCurrentKingInCheck(boolean currentKingInCheck) {
-        this.currentKingInCheck = currentKingInCheck;
+    public void performMove(String move) {
+        moveInterpreter.interpretMove(move);
     }
+
+
+
+
 }

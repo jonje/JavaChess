@@ -53,13 +53,13 @@ public abstract class Piece {
         return (this.getColor().equals(currentPlayer.getTeamColor()));
     }
 
-    protected boolean isTeamsTurn(Controller controller) {
-        return this.getColor().equals(controller.getCurrentPlayer().getTeamColor());
+    protected boolean isTeamsTurn(ChessGame game) {
+        return this.getColor().equals(game.getCurrentPlayer().getTeamColor());
 
     }
 
     public abstract Piece getInstance();
-    public abstract Iterator<Position> getMovesList(Position srcPos, Controller controller);
+    public abstract Iterator<Position> getMovesList(Position srcPos, ChessGame game);
 
-    public abstract boolean isMoveValid(Position srcPos, Position destPos, Controller controller);
+    public abstract boolean isMoveValid(Position srcPos, Position destPos, ChessGame game);
 }

@@ -1,7 +1,7 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.Cell;
+import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
 
@@ -25,23 +25,23 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Iterator<Position> getMovesList(Position srcPos, Controller controller) {
+    public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         ArrayList<Position> moves = new ArrayList<>();
-        moves.addAll(getForwardMoves(srcPos, controller));
-        moves.addAll(getBackwardMoves(srcPos, controller));
-        moves.addAll(getOppositeDirection(srcPos, controller));
+        moves.addAll(getForwardMoves(srcPos, game));
+        moves.addAll(getBackwardMoves(srcPos, game));
+        moves.addAll(getOppositeDirection(srcPos, game));
         return moves.iterator();
     }
 
-    private ArrayList<Position> getForwardMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getForwardMoves(Position srcPos, ChessGame game) {
         boolean isPieceFound = false;
         ArrayList<Position> forwardMoves = new ArrayList<>();
 
         int rowCounter = srcPos.getRowAsIndex() + 1;
 
-        for(int i = srcPos.getColumnAsIndex() + 1;  i < controller.getBoardSize() && rowCounter < controller.getBoardSize() && !isPieceFound; i++, rowCounter++) {
+        for(int i = srcPos.getColumnAsIndex() + 1;  i < game.getBoardSize() && rowCounter < game.getBoardSize() && !isPieceFound; i++, rowCounter++) {
             Position tempPos = new Position(i, rowCounter);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
             forwardMoves.add(tempPos);
@@ -51,7 +51,7 @@ public class Bishop extends Piece {
         return forwardMoves;
     }
 
-    private ArrayList<Position> getBackwardMoves(Position srcPos, Controller controller) {
+    private ArrayList<Position> getBackwardMoves(Position srcPos, ChessGame game) {
         boolean isPieceFound = false;
         ArrayList<Position> backwardMoves = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Bishop extends Piece {
 
         for(int i = srcPos.getColumnAsIndex() - 1;  i >= 0 && rowCounter >= 0 && !isPieceFound; i--, rowCounter--) {
             Position tempPos = new Position(i, rowCounter);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
             backwardMoves.add(tempPos);
@@ -70,15 +70,15 @@ public class Bishop extends Piece {
         return backwardMoves;
     }
 
-    private ArrayList<Position> getOppositeDirection(Position srcPos, Controller controller) {
+    private ArrayList<Position> getOppositeDirection(Position srcPos, ChessGame game) {
         boolean isPieceFound = false;
         ArrayList<Position> moves = new ArrayList<>();
 
         int rowCounter = srcPos.getRowAsIndex() - 1;
 
-        for(int i = srcPos.getColumnAsIndex() + 1;  i < controller.getBoardSize() && rowCounter >= 0 && !isPieceFound; i++, rowCounter--) {
+        for(int i = srcPos.getColumnAsIndex() + 1;  i < game.getBoardSize() && rowCounter >= 0 && !isPieceFound; i++, rowCounter--) {
             Position tempPos = new Position(i, rowCounter);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
             moves.add(tempPos);
@@ -88,9 +88,9 @@ public class Bishop extends Piece {
         rowCounter = srcPos.getRowAsIndex() + 1;
         isPieceFound = false;
 
-        for(int i = srcPos.getColumnAsIndex() - 1;  i >= 0 && rowCounter < controller.getBoardSize() && !isPieceFound; i--, rowCounter++) {
+        for(int i = srcPos.getColumnAsIndex() - 1;  i >= 0 && rowCounter < game.getBoardSize() && !isPieceFound; i--, rowCounter++) {
             Position tempPos = new Position(i, rowCounter);
-            Cell cell = controller.getCell(tempPos);
+            Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
             moves.add(tempPos);
@@ -101,10 +101,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(Position srcPos, Position destPos, Controller controller) {
+    public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid;
-        if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) && isTeamsTurn(controller)) {
-            isValid = isPieceNotInPath(srcPos, destPos, controller);
+        if((srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos)) && isTeamsTurn(game)) {
+            isValid = isPieceNotInPath(srcPos, destPos, game);
 
         } else {
             isValid = false;
@@ -113,7 +113,7 @@ public class Bishop extends Piece {
         return isValid; //(srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos));
     }
 
-    private boolean isPieceNotInPath(Position srcPos, Position destPos, Controller controller) {
+    private boolean isPieceNotInPath(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid = true;
         boolean isPieceFound = false;
 
@@ -123,7 +123,7 @@ public class Bishop extends Piece {
 
         for(int i = startingPos.getColumn() + 1;  i < endingPos.getColumn() && !isPieceFound; i++, rowCounter++) {
 
-            Cell cell = controller.getCell(new Position("" + (char)i + rowCounter));
+            Cell cell = game.getCell(new Position("" + (char)i + rowCounter));
 
             if(cell.isOccupied() && this.getColor().equals(cell.getPiece().getColor())) {
                 isValid = false;
