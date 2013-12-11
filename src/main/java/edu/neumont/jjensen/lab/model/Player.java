@@ -5,6 +5,7 @@ import edu.neumont.jjensen.lab.model.pieces.King;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +14,8 @@ import java.util.List;
  * Time: 1:04 PM
  */
 public class Player {
+    private Scanner inputStream;
+
     private TeamColor color;
     private ChessGame game;
     private List<String> kingProtectorMoves;
@@ -21,6 +24,7 @@ public class Player {
         this.color = color;
         this.game = game;
         kingProtectorMoves = new ArrayList<>();
+        inputStream = new Scanner(System.in);
 
     }
 
@@ -51,6 +55,35 @@ public class Player {
         }
 
         return kingInCheck;
+    }
+
+    public void takeTurn() {
+        displayMessage("Select piece:(Ex. A7)");
+        String userInput = getUserInput();
+        Position selectedPosition = null;
+        if(isValidInput(userInput)) {
+            selectedPosition = getPosition(userInput);
+
+        }
+
+
+    }
+
+    private String getUserInput() {
+        return inputStream.nextLine();
+    }
+
+    private boolean isValidInput(String input) {
+        return (input.length() == 2);
+    }
+
+    private Position getPosition(String pos) {
+        return new Position(pos);
+
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 
     public Iterator<String> getProtectorMoves() {
