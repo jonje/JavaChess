@@ -13,9 +13,9 @@ public class Controller {
     private ChessGame game;
     private Display display;
 
-    public Controller(Display display) {
+    public Controller() {
         game = new ChessGame(this);
-        this.display = display;
+        display = new Display(this);
     }
 
     public int getBoardSize() {
@@ -51,4 +51,15 @@ public class Controller {
     }
 
 
+    public boolean isKingProtectable() {
+        return game.isKingProtectable();
+    }
+
+    public boolean isGameRunning() {
+        return game.isGameRunning();
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        game.setGameRunning(gameRunning);
+    }
 }

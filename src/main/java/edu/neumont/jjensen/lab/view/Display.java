@@ -12,9 +12,11 @@ import edu.neumont.jjensen.lab.model.Position;
  */
 public class Display {
     private Controller controller;
+    private final String PADDING = "\n";
 
-    public Display() {
-        controller = new Controller(this);
+    public Display(Controller controller) {
+        this.controller = controller;
+
     }
 
     public void displayBoard() {
@@ -33,6 +35,8 @@ public class Display {
             System.out.println(output);
 
         }
+
+        System.out.println(PADDING);
 
     }
 

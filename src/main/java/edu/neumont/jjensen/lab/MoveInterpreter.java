@@ -8,7 +8,6 @@ import edu.neumont.jjensen.lab.model.TeamColor;
 import edu.neumont.jjensen.lab.model.pieces.*;
 
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 /**
@@ -35,7 +34,7 @@ public class MoveInterpreter {
                 }
             }),
 
-            new PatternMatcher("(?<move>(?<pos1>[a-h][1-8 ]) (?<pos2>[a-h][1-8]))", new Actionable() {
+            new PatternMatcher("(?<move>(?<pos1>[a-hA-H][1-8 ]) (?<pos2>[a-hA-H][1-8]))", new Actionable() {
                 @Override
                 public void performAction(String move, PatternMatcher patternMatcher) {
                     movePiece(move, patternMatcher);
@@ -119,9 +118,6 @@ public class MoveInterpreter {
                 Position pos2Key = new Position(matcher.group("pos2").toUpperCase());
 
                 Cell srcCell = controller.getCell(pos1Key);
-                if(controller.isKingInCheck()) {
-                     output("King in check");
-                 }
 
                 if(srcCell.isOccupied()) {
                     Piece piece = srcCell.getPiece();
@@ -129,10 +125,6 @@ public class MoveInterpreter {
                         controller.setPiece(pos2Key, piece);
                         controller.getCell(pos1Key).removePiece();
 
-                        controller.displayBoaard();
-                        output("Press any key to continue...");
-                        controller.endTurn();
-                        new Scanner(System.in).nextLine();
                     } else {
                         output(move + " is an invalid move" + NEWLINE);
                     }

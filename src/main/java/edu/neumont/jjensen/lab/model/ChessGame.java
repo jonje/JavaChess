@@ -16,6 +16,7 @@ public class ChessGame {
     private Player currentPlayer;
     private MoveInterpreter moveInterpreter;
     private Controller controller;
+    private boolean gameRunning;
 
     public ChessGame(Controller controller) {
         board = new Board();
@@ -53,6 +54,15 @@ public class ChessGame {
     }
 
 
+    public boolean isKingProtectable() {
+        return currentPlayer.isKingProtectable();
+    }
 
+    public boolean isGameRunning() {
+        return gameRunning;
+    }
 
+    public void setGameRunning(boolean gameRunning) {
+        this.gameRunning = gameRunning;
+    }
 }
