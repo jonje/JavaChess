@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class Pawn extends Piece {
     private boolean isFirstTurn;
+    private List<NewPositionCreator> positionCreators;
+
     public Pawn() {
         asciiLetter = "p";
         isFirstTurn = true;
@@ -26,12 +28,16 @@ public class Pawn extends Piece {
 
     @Override
     public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
+        setupPositionCreators();
         List<Position> moves = new ArrayList<>();
-        Position tempPos = new NewPositionCreator(0,1).getNewPosition(srcPos);
+        for(NewPositionCreator positionCreator : positionCreators) {
+            Position tempPos = positionCreator.getNewPosition(srcPos);
 
-        if(isMoveValid(srcPos, tempPos, game)) {
-            moves.add(tempPos);
+            if(isMoveValid(srcPos, tempPos, game)) {
+                moves.add(tempPos);
+            }
         }
+
         return moves.iterator();
     }
 
@@ -101,6 +107,17 @@ public class Pawn extends Piece {
             }
         }
         return isValid;
+    }
+
+    private void setupPositionCreators() {
+        positionCreators = new ArrayList<>();
+        positionCreators.add(new NewPositionCreator(0,1));
+        positionCreators.add(new NewPositionCreator(0,-1));
+
+        if(isFirstTurn) {
+            positionCreators.add(new NewPositionCreator(0, 2));
+            positionCreators.add(new NewPositionCreator(0, -2));
+        }
     }
 
 }

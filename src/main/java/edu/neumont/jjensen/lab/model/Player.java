@@ -61,8 +61,19 @@ public class Player {
         displayMessage("Select piece:(Ex. A7)");
         String userInput = getUserInput();
         Position selectedPosition = null;
-        if(isValidInput(userInput)) {
+        if(isValidInput(userInput) && game.getCell(getPosition(userInput)).isOccupied()) {
             selectedPosition = getPosition(userInput);
+            Piece piece = game.getCell(selectedPosition).getPiece();
+            String moves = "";
+            Iterator<Position> possibleMoves = piece.getMovesList(selectedPosition, game);
+            while(possibleMoves.hasNext()) {
+                moves += "[" + possibleMoves.next().toString() + "]";
+
+            }
+
+            displayMessage(moves);
+
+
 
         }
 

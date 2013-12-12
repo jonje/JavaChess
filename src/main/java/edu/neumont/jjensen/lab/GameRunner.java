@@ -38,8 +38,12 @@ public class GameRunner implements Runnable {
                     controller.getCurrentPlayer().takeTurn();
 
                 } else {
+
                     controller.setGameRunning(false);
                 }
+            } else {
+                controller.displayBoaard();
+                controller.getCurrentPlayer().takeTurn();
             }
             controller.displayBoaard();
             System.out.println("Press any key to continue...");

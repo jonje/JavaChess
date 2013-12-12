@@ -16,7 +16,7 @@ public class Main {
 
         for(String argument: args) {
             inputReader.readInFile(argument);
-            controller.displayBoaard();
+
         }
 
         runner.run();
