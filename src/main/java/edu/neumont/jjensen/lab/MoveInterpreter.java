@@ -21,30 +21,30 @@ public class MoveInterpreter {
     private PatternMatcher[] patternMatchers ={
             new PatternMatcher("(?<pieceMove>(?<pieceType>[a-zA-Z])(?<color>[l,L,d,D])(?<location>[a-hA-H]{1}[1-8]))", new Actionable() {
                 @Override
-                public void performAction(String move, PatternMatcher patternMatcher) {
-                    setPiece(move, patternMatcher);
+                public boolean performAction(String move, PatternMatcher patternMatcher) {
+                    return setPiece(move, patternMatcher);
 
                 }
             }),
 
             new PatternMatcher("(?<castling>(?<piece1Pos1>[a-h][1-8 ]) (?<piece1Pos2>[a-h][1-8]) (?<piece2Pos1>[a-h][1-8]) (?<piece2Pos2>[a-h][1-8]))", new Actionable() {
                 @Override
-                public void performAction(String move, PatternMatcher patternMatcher) {
-                    castleingMove(move, patternMatcher);
+                public boolean performAction(String move, PatternMatcher patternMatcher) {
+                    return castleingMove(move, patternMatcher);
                 }
             }),
 
             new PatternMatcher("(?<move>(?<pos1>[a-hA-H][1-8 ]) (?<pos2>[a-hA-H][1-8]))", new Actionable() {
                 @Override
-                public void performAction(String move, PatternMatcher patternMatcher) {
-                    movePiece(move, patternMatcher);
+                public boolean performAction(String move, PatternMatcher patternMatcher) {
+                    return movePiece(move, patternMatcher);
                 }
             }),
 
             new PatternMatcher("(?<capture>(?<piece>[a-h][1-8 ]) (?<capturePiece>[a-h][1-8])[*])", new Actionable() {
                 @Override
-                public void performAction(String move, PatternMatcher patternMatcher) {
-                    capturePiece(move, patternMatcher);
+                public boolean performAction(String move, PatternMatcher patternMatcher) {
+                    return capturePiece(move, patternMatcher);
                 }
             })
 
@@ -75,25 +75,27 @@ public class MoveInterpreter {
     }
 
 
-    public void interpretMove(String move) {
-        
+    public boolean interpretMove(String move) {
+        boolean isValid = false;
         matchFound = false;
         castleingPerformed = false;
 
         for (PatternMatcher patternMatcher : patternMatchers) {
 
-            patternMatcher.performAction(move, patternMatcher);
+            if(patternMatcher.performAction(move, patternMatcher)){
+                isValid = true;
+            }
         }
 
         if(!matchFound) {
             
             output(move + " is not a valid move" + NEWLINE);
         }
-        
+        return isValid;
     }
 
 
-    private void setPiece(String move, PatternMatcher patternMatcher) {
+    private boolean setPiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
         if(matcher.find()) {
             matchFound = true;
@@ -104,14 +106,17 @@ public class MoveInterpreter {
 
 
         }
+        return false; //TODO fix this
     }
 
 
 
-    private void movePiece(String move, PatternMatcher patternMatcher) {
+    private boolean movePiece(String move, PatternMatcher patternMatcher) {
+        boolean movePerformed = false;
         Matcher matcher = patternMatcher.getMatcher(move);
 
         if(!castleingPerformed) {
+
             while(matcher.find()) {
                 matchFound = true;
                 Position pos1Key = new Position(matcher.group("pos1").toUpperCase());
@@ -124,6 +129,7 @@ public class MoveInterpreter {
                     if(piece.isMoveValid(pos1Key, pos2Key, controller.getGameInstance())) {
                         controller.setPiece(pos2Key, piece);
                         controller.getCell(pos1Key).removePiece();
+                        movePerformed = true;
 
                     } else {
                         output(move + " is an invalid move" + NEWLINE);
@@ -136,22 +142,24 @@ public class MoveInterpreter {
 
             }
         }
-
+        return movePerformed;
 
     }
 
 
 
-    private void capturePiece(String move, PatternMatcher patternMatcher) {
+    private boolean capturePiece(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
 
         while(matcher.find()) {
             matchFound = true;
             output("Piece at " + matcher.group("piece") + " captures piece at " + matcher.group("capturePiece"));
         }
+
+        return false; //todo must fix later
     }
 
-    private void castleingMove(String move, PatternMatcher patternMatcher) {
+    private boolean castleingMove(String move, PatternMatcher patternMatcher) {
         Matcher matcher = patternMatcher.getMatcher(move);
         if(matcher.find()) {
             matcher.reset();
@@ -163,6 +171,8 @@ public class MoveInterpreter {
             }
 
         }
+
+        return false; //TODO fix later
     }
 
     private String getCastleingOutput(String position1, String position2) {

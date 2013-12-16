@@ -40,6 +40,10 @@ public class ChessGame {
         return currentPlayer;
     }
 
+    public void dumpBoard() {
+        board.dumpBoard();
+    }
+
     public void endTurn() {
         currentPlayer = (currentPlayer.getTeamColor().equals(TeamColor.WHITE)) ? blackPlayer : whitePlayer;
 
@@ -49,8 +53,8 @@ public class ChessGame {
         return currentPlayer.isKingInCheck();
     }
 
-    public void performMove(String move) {
-        moveInterpreter.interpretMove(move);
+    public boolean performMove(String move) {
+        return moveInterpreter.interpretMove(move);
     }
 
 

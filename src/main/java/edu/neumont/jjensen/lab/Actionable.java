@@ -8,5 +8,5 @@ package edu.neumont.jjensen.lab;
  * To change this template use File | Settings | File Templates.
  */
 public interface Actionable {
-    public void performAction(String next, PatternMatcher patternMatcher);
+    public boolean performAction(String next, PatternMatcher patternMatcher);
 }

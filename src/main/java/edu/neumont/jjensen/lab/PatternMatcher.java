@@ -19,8 +19,8 @@ public class PatternMatcher implements Actionable {
     }
 
     @Override
-    public void performAction(String move, PatternMatcher patternMatcher) {
-        action.performAction(move, patternMatcher);
+    public boolean performAction(String move, PatternMatcher patternMatcher) {
+        return action.performAction(move, patternMatcher);
     }
 
     public Matcher getMatcher(String move) {

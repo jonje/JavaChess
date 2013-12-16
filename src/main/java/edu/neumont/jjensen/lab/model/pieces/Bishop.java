@@ -44,8 +44,12 @@ public class Bishop extends Piece {
             Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
-            forwardMoves.add(tempPos);
+            if(isPieceFound && !cell.getPiece().getColor().equals(this.getColor())) {
+                forwardMoves.add(tempPos);
+            } else if(!isPieceFound) {
+                forwardMoves.add(tempPos);
 
+            }
         }
 
         return forwardMoves;
@@ -62,8 +66,12 @@ public class Bishop extends Piece {
             Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
-            backwardMoves.add(tempPos);
+            if(isPieceFound && !cell.getPiece().getColor().equals(this.getColor())) {
+                backwardMoves.add(tempPos);
+            } else if(!isPieceFound) {
+                backwardMoves.add(tempPos);
 
+            }
 
         }
 
@@ -81,7 +89,13 @@ public class Bishop extends Piece {
             Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
-            moves.add(tempPos);
+            if(isPieceFound && !cell.getPiece().getColor().equals(this.getColor())) {
+                moves.add(tempPos);
+            } else if(!isPieceFound) {
+                moves.add(tempPos);
+
+            }
+
 
         }
 
@@ -93,7 +107,12 @@ public class Bishop extends Piece {
             Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
-            moves.add(tempPos);
+            if(isPieceFound && !cell.getPiece().getColor().equals(this.getColor())) {
+                moves.add(tempPos);
+            } else if(!isPieceFound) {
+                moves.add(tempPos);
+            }
+
 
         }
 
@@ -110,7 +129,7 @@ public class Bishop extends Piece {
             isValid = false;
         }
 
-        return isValid; //(srcPos.getRowDifference(destPos) == srcPos.getColumnDifference(destPos));
+        return isValid;
     }
 
     private boolean isPieceNotInPath(Position srcPos, Position destPos, ChessGame game) {

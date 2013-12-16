@@ -4,7 +4,6 @@ import edu.neumont.jjensen.lab.controller.Controller;
 import edu.neumont.jjensen.lab.model.TeamColor;
 
 import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +34,7 @@ public class GameRunner implements Runnable {
 
                     }
                     System.out.println(moves);
+                    controller.displayBoaard();
                     controller.getCurrentPlayer().takeTurn();
 
                 } else {
@@ -45,9 +45,7 @@ public class GameRunner implements Runnable {
                 controller.displayBoaard();
                 controller.getCurrentPlayer().takeTurn();
             }
-            controller.displayBoaard();
-            System.out.println("Press any key to continue...");
-            new Scanner(System.in).nextLine();
+
 
         }
         String winnerColor = (controller.getCurrentPlayer().getTeamColor().equals(TeamColor.BLACK)) ? TeamColor.WHITE.toString() : TeamColor.BLACK.toString();

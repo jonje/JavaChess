@@ -1,7 +1,5 @@
 package edu.neumont.jjensen.lab.model;
 
-import edu.neumont.jjensen.lab.controller.Controller;
-
 import java.util.Iterator;
 
 /**
@@ -53,8 +51,15 @@ public abstract class Piece {
         return (this.getColor().equals(currentPlayer.getTeamColor()));
     }
 
-    protected boolean isTeamsTurn(ChessGame game) {
-        return this.getColor().equals(game.getCurrentPlayer().getTeamColor());
+    protected boolean isTeamsTurn(final ChessGame game) {
+        if(this.getColor() == null) {
+            System.out.println("Reached " + this.toString());
+        }
+        boolean isTeamTurn = false;
+
+        isTeamTurn = this.getColor().equals(game.getCurrentPlayer().getTeamColor());
+
+        return isTeamTurn;
 
     }
 

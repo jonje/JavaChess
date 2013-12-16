@@ -71,13 +71,31 @@ public class Player {
 
             }
 
-            displayMessage(moves);
+            if(moves.length() > 0) {
+                displayMessage(moves);
+                displayMessage("Enter position to move to:");
+                if(performMove(selectedPosition)) {
+                    game.endTurn();
+                }
+            }
+
 
 
 
         }
 
 
+    }
+
+    private boolean performMove(Position selectedPosition) {
+        boolean performed = false;
+        String userInput = getUserInput();
+        if(isValidInput(userInput)) {
+            String move = selectedPosition.toString() + " " + new Position(userInput).toString();
+            performed = game.performMove(move);
+
+        }
+        return performed;
     }
 
     private String getUserInput() {
@@ -116,6 +134,7 @@ public class Player {
     }
 
     public boolean isKingProtectable() {
+        System.out.println("Reached isKing Protectable");
         kingProtectorMoves = new ArrayList<>();
 
         boolean kingProtectable = false;
@@ -141,21 +160,24 @@ public class Player {
         return kingProtectable;
     }
 
-    private List<String> tryMoves(Position tempPos, Piece piece) {
+    private List<String> tryMoves(final Position tempPos, final Piece piece) {
         List<String> listKingProtectorMoves = new ArrayList<>();
         Iterator<Position> moves = piece.getMovesList(tempPos, game);
 
         while (moves.hasNext()) {
             Position destPos = moves.next();
             String move = tempPos.toString() + " " + destPos.toString();
-            game.performMove(move);
-            if (!isKingInCheck()) {
-                listKingProtectorMoves.add(move);
+            //game.dumpBoard();
+            if(game.performMove(move)){
+                if (!isKingInCheck()) {
+                    listKingProtectorMoves.add(move);
 
+                }
+
+                move = destPos.toString() + " " + tempPos.toString();
+                game.performMove(move);
             }
 
-            move = destPos.toString() + " " + tempPos.toString();
-            game.performMove(move);
 
         }
         return listKingProtectorMoves;

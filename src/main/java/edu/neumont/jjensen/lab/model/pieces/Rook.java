@@ -44,8 +44,10 @@ public class Rook extends Piece {
             if(isInBoardBounds(tempPos, game)) {
                 Cell cell = game.getCell(tempPos);
 
-                    isPieceFound = cell.isOccupied();
+                isPieceFound = cell.isOccupied();
+                if(isPieceFound && !cell.getPiece().getColor().equals(game.getCurrentPlayer().getTeamColor())){
                     columnMoves.add(tempPos);
+                }
 
             }
 
@@ -56,7 +58,9 @@ public class Rook extends Piece {
             if(isInBoardBounds(tempPos, game)) {
                 Cell cell = game.getCell(tempPos);
                     isPieceFound = cell.isOccupied();
+                if(isPieceFound && !cell.getPiece().getColor().equals(game.getCurrentPlayer().getTeamColor())){
                     columnMoves.add(tempPos);
+                }
 
             }
 
@@ -80,7 +84,10 @@ public class Rook extends Piece {
             Cell cell = game.getCell(tempPos);
 
                 isPieceFound = cell.isOccupied();
-                rowMoves.add(tempPos);
+                if(isPieceFound && !cell.getPiece().getColor().equals(game.getCurrentPlayer().getTeamColor())){
+                    rowMoves.add(tempPos);
+                }
+
 
         }
 
@@ -90,7 +97,9 @@ public class Rook extends Piece {
             Cell cell = game.getCell(tempPos);
 
             isPieceFound = cell.isOccupied();
-            rowMoves.add(tempPos);
+            if(isPieceFound && !cell.getPiece().getColor().equals(game.getCurrentPlayer().getTeamColor())){
+                rowMoves.add(tempPos);
+            }
         }
 
         return rowMoves;

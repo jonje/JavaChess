@@ -29,12 +29,15 @@ public class Queen extends Piece {
     public Iterator<Position> getMovesList(Position srcPos, ChessGame game) {
         List<Position> moves = new ArrayList<>();
 
-        Iterator<Position> iterator = new Bishop().getMovesList(srcPos, game);
+        Bishop bish = new Bishop();
+        bish.setColor(this.getColor());
+        Iterator<Position> iterator = bish.getMovesList(srcPos, game);
         while(iterator.hasNext()) {
             moves.add(iterator.next());
         }
-
-        iterator = new Rook().getMovesList(srcPos, game);
+        Rook rook = new Rook();
+        rook.setColor(this.getColor());
+        iterator = rook.getMovesList(srcPos, game);
         while(iterator.hasNext()) {
             moves.add(iterator.next());
         }
@@ -44,7 +47,11 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
+        Bishop bish = new Bishop();
+        bish.setColor(this.getColor());
 
-        return (new Bishop().isMoveValid(srcPos, destPos, game)) || (new Rook().isMoveValid(srcPos, destPos, game));
+        Rook rook = new Rook();
+        rook.setColor(this.getColor());
+        return (bish.isMoveValid(srcPos, destPos, game)) || (rook.isMoveValid(srcPos, destPos, game));
     }
 }

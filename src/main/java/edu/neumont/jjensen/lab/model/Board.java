@@ -46,6 +46,18 @@ public class Board {
         return BOARD_SIZE;
     }
 
+    public void dumpBoard() {
+        for(int column = 0; column < 8; column++) {
+            for(int row = 0; row < 8; row++) {
+                Cell cell = cells[column][row];
+                if(cell.isOccupied()) {
+                    System.out.println(cell.getPiece());
+                }
+            }
+        }
+
+    }
+
 
 
 
