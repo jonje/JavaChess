@@ -174,8 +174,8 @@ public class Player {
 
                 }
 
-                move = destPos.toString() + " " + tempPos.toString();
-                game.performMove(move);
+
+                game.forceMove(destPos, tempPos);
             }
 
 

@@ -57,6 +57,14 @@ public class ChessGame {
         return moveInterpreter.interpretMove(move);
     }
 
+    public void forceMove(Position srcPos, Position destPos) {
+        Cell srcCell = board.getCell(srcPos);
+        Cell destCell = board.getCell(destPos);
+
+        destCell.setPiece(srcCell.getPiece());
+        srcCell.removePiece();
+    }
+
 
     public boolean isKingProtectable() {
         return currentPlayer.isKingProtectable();

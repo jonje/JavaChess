@@ -63,6 +63,11 @@ public abstract class Piece {
 
     }
 
+    protected void forcePieceMove(Position srcPos, Position destPos, ChessGame game) {
+        game.forceMove(srcPos, destPos);
+
+    }
+
     public abstract Piece getInstance();
     public abstract Iterator<Position> getMovesList(Position srcPos, ChessGame game);
 

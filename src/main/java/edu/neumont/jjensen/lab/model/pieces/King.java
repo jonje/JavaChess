@@ -4,6 +4,7 @@ import edu.neumont.jjensen.lab.model.ChessGame;
 import edu.neumont.jjensen.lab.model.NewPositionCreator;
 import edu.neumont.jjensen.lab.model.Piece;
 import edu.neumont.jjensen.lab.model.Position;
+import edu.neumont.jjensen.lab.model.Cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,9 +48,21 @@ public class King extends Piece {
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
+        boolean isValid = false;
         int differenceInRows = srcPos.getRowDifference(destPos);
         int differenceInColumns = srcPos.getColumnDifference(destPos);
-        return (isInBounds(differenceInRows) && isInBounds(differenceInColumns) && isTeamsTurn(game));
+
+        if(isInBounds(differenceInRows) && isInBounds(differenceInColumns) && isTeamsTurn(game)) {
+            Cell cell = game.getCell(destPos);
+            if(cell.isOccupied() && !cell.getPiece().getColor().equals(this.getColor())){
+                isValid = true;
+
+            } else if(!cell.isOccupied()) {
+                isValid = true;
+            }
+
+        }
+        return isValid;
     }
 
     private boolean isInBounds(int difference) {
