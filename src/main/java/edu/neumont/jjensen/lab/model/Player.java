@@ -1,6 +1,8 @@
 package edu.neumont.jjensen.lab.model;
 
 import edu.neumont.jjensen.lab.model.pieces.King;
+import edu.neumont.jjensen.lab.model.pieces.Pawn;
+import edu.neumont.jjensen.lab.model.pieces.Queen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,6 +77,8 @@ public class Player {
                 displayMessage(moves);
                 displayMessage("Enter position to move to:");
                 if(performMove(selectedPosition)) {
+                    changePawn(piece);
+                    checkForPawnPromotion(piece, selectedPosition, game);
                     game.endTurn();
                 }
             }
@@ -85,6 +89,36 @@ public class Player {
         }
 
 
+    }
+
+    private void checkForPawnPromotion(Piece piece, Position pos, ChessGame game) {
+        if(piece instanceof Pawn) {
+            if(piece.getColor().equals(TeamColor.WHITE)){
+               if(pos.getRow() == '1') {
+                   createQueen(pos, piece, game);
+               }
+            } else {
+                if(pos.getRow() == '8') {
+                   createQueen(pos, piece, game);
+                }
+            }
+
+        }
+    }
+
+    private void createQueen(Position pos, Piece piece, ChessGame game) {
+        Piece queen = new Queen();
+        queen.setColor(piece.getColor());
+        game.getCell(pos).setPiece(queen);
+
+
+    }
+
+    private void changePawn(Piece piece) {
+        if((piece instanceof Pawn) && ((Pawn) piece).isFirstTurn()) {
+            ((Pawn) piece).setIsFirstTurn(false);
+
+        }
     }
 
     private boolean performMove(Position selectedPosition) {

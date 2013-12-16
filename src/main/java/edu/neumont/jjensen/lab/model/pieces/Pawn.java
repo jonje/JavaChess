@@ -15,6 +15,7 @@ import java.util.List;
 public class Pawn extends Piece {
     private boolean isFirstTurn;
     private List<NewPositionCreator> positionCreators;
+    private List<NewPositionCreator> captureCreators;
 
     public Pawn() {
         asciiLetter = "p";
@@ -38,8 +39,32 @@ public class Pawn extends Piece {
             }
         }
 
+        for(NewPositionCreator captureCreatror : captureCreators) {
+            Position tempPos = captureCreatror.getNewPosition(srcPos);
+            if(isInBoundsOfBoard(tempPos) && isCapture(srcPos, tempPos, game)) {
+                moves.add(tempPos);
+
+            }
+        }
+
+
         return moves.iterator();
     }
+
+    private boolean isCapture(Position srcPos, Position destPos, ChessGame game) {
+        boolean capture = false;
+        if(srcPos.getColumnDifference(destPos) == 1 && srcPos.getRowDifference(destPos) == 1){
+            Cell destCell = game.getCell(destPos);
+            capture = (destCell.isOccupied() && !destCell.getPiece().getColor().equals(this.getColor()));
+        }
+        return capture;
+    }
+
+    private boolean isInBoundsOfBoard(Position pos) {
+        return ((pos.getColumnAsIndex() >= 0 && pos.getColumnAsIndex() < 8) && (pos.getRowAsIndex() >= 0 && pos.getRowAsIndex() < 8));
+    }
+
+
 
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
@@ -82,7 +107,7 @@ public class Pawn extends Piece {
             }
 
         } else {
-            if(difference <= -1 && difference > 0) {
+            if(difference <= 1 && difference > 0) {
                 isValid = true;
 
             }
@@ -105,7 +130,7 @@ public class Pawn extends Piece {
             }
 
         } else {
-            if(difference >= 1 && difference < 0) {
+            if(difference >= -1 && difference < 0) {
                 isValid = true;
 
             }
@@ -122,6 +147,26 @@ public class Pawn extends Piece {
             positionCreators.add(new NewPositionCreator(0, 2));
             positionCreators.add(new NewPositionCreator(0, -2));
         }
+
+        captureCreators = new ArrayList<>();
+        if(this.getColor().equals(TeamColor.BLACK)) {
+            captureCreators.add(new NewPositionCreator(1, 1));
+            captureCreators.add(new NewPositionCreator(1, -1));
+        } else {
+            captureCreators.add(new NewPositionCreator(-1, -1));
+            captureCreators.add(new NewPositionCreator(-1,1));
+            captureCreators.add(new NewPositionCreator(1, -1));
+        }
+
+
+    }
+
+    public boolean isFirstTurn () {
+        return isFirstTurn;
+    }
+
+    public void setIsFirstTurn(boolean isFirstTurn) {
+        this.isFirstTurn = isFirstTurn;
     }
 
 }
