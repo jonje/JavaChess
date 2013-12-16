@@ -44,10 +44,9 @@ public class Pawn extends Piece {
     @Override
     public boolean isMoveValid(Position srcPos, Position destPos, ChessGame game) {
         boolean isValid = true;
-        if(((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos) && isTeamsTurn(game))) {
-            Cell cell = game.getCell(destPos);
+        if(isTeamsTurn(game) && ((srcPos.isSameColumn(destPos)) && isValidDistance(srcPos, destPos))) {
 
-            if(cell.isOccupied()) {
+            if(isPieceInWay(destPos, game)) {
                 isValid = false;
             }
 
@@ -90,6 +89,11 @@ public class Pawn extends Piece {
         }
         return isValid;
 
+    }
+
+    private boolean isPieceInWay(Position destPos, ChessGame game) {
+        Cell cell = game.getCell(destPos);
+        return (cell.isOccupied());
     }
 
     private boolean isValidForBlack(int difference) {

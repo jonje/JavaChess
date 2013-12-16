@@ -167,7 +167,7 @@ public class Player {
         while (moves.hasNext()) {
             Position destPos = moves.next();
             String move = tempPos.toString() + " " + destPos.toString();
-            //game.dumpBoard();
+
             if(game.performMove(move)){
                 if (!isKingInCheck()) {
                     listKingProtectorMoves.add(move);

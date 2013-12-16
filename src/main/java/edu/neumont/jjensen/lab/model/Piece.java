@@ -52,14 +52,8 @@ public abstract class Piece {
     }
 
     protected boolean isTeamsTurn(final ChessGame game) {
-        if(this.getColor() == null) {
-            System.out.println("Reached " + this.toString());
-        }
-        boolean isTeamTurn = false;
 
-        isTeamTurn = this.getColor().equals(game.getCurrentPlayer().getTeamColor());
-
-        return isTeamTurn;
+        return this.getColor().equals(game.getCurrentPlayer().getTeamColor());
 
     }
 
