@@ -18,6 +18,7 @@ public class Display extends JPanel {
 
     public Display(Controller controller) {
         this.controller = controller;
+        this.setSize(new Dimension(200, 200));
 
     }
 
@@ -25,7 +26,29 @@ public class Display extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-        displayBoard(graphics2D);
+        //displayBoard(graphics2D);
+        boolean isWhite = false;
+        for(int row = 0;  row < 8; row++) {
+            for(int column =0; column < 8; column++) {
+                if(isWhite) {
+                    graphics2D.setColor(Color.WHITE);
+                    isWhite = false;
+                } else {
+                    graphics2D.setBackground(Color.BLACK);
+                    isWhite = true;
+                }
+                int x = column * 64;
+                int y = row * 64;
+                graphics2D.fillRect(x, y, 64, 64);
+
+            }
+
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(200, 200);
     }
 
     public void displayBoard(Graphics2D graphics2D) {
@@ -39,8 +62,9 @@ public class Display extends JPanel {
                     graphics2D.setBackground(Color.BLACK);
                     isWhite = true;
                 }
-
-                graphics2D.fillRect(column * 64, row * 64, 64, 64);
+                int x = column * 64;
+                int y = row * 64;
+                graphics2D.fillRect(x, y, 64, 64);
 
 
 
