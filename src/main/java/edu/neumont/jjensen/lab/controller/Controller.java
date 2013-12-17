@@ -62,4 +62,8 @@ public class Controller {
     public void setGameRunning(boolean gameRunning) {
         game.setGameRunning(gameRunning);
     }
+
+    public Display getDisplay() {
+        return display;
+    }
 }
