@@ -20,9 +20,13 @@ public class Queen extends Piece {
         asciiLetter = "q";
     }
 
+    public Queen(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+    }
+
     @Override
     public Queen getInstance() {
-        return new Queen();
+        return new Queen(whiteImage, blackImage);
     }
 
     @Override

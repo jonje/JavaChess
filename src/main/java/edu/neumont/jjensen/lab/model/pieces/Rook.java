@@ -20,9 +20,14 @@ public class Rook extends Piece {
 
     }
 
+    public Rook(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+    }
+
+
     @Override
     public Rook getInstance(){
-        return new Rook();
+        return new Rook(whiteImage, blackImage);
     }
 
     @Override

@@ -1,10 +1,6 @@
 package edu.neumont.jjensen.lab.model.pieces;
 
-import edu.neumont.jjensen.lab.model.ChessGame;
-import edu.neumont.jjensen.lab.model.NewPositionCreator;
-import edu.neumont.jjensen.lab.model.Piece;
-import edu.neumont.jjensen.lab.model.Position;
-import edu.neumont.jjensen.lab.model.Cell;
+import edu.neumont.jjensen.lab.model.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,9 +22,14 @@ public class King extends Piece {
 
     }
 
+    public King(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+        setupPositionCreators();
+    }
+
     @Override
     public King getInstance() {
-        return new King();
+        return new King(whiteImage, blackImage);
     }
 
     @Override

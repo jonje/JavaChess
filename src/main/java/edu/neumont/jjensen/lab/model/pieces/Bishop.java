@@ -19,9 +19,13 @@ public class Bishop extends Piece {
         asciiLetter = "b";
     }
 
+    public Bishop(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+    }
+
     @Override
     public Bishop getInstance() {
-        return new Bishop();
+        return new Bishop(whiteImage, blackImage);
     }
 
     @Override

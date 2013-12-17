@@ -19,6 +19,7 @@ public class GameRunner implements Runnable {
         this.controller = controller;
         frame = new DisplayFrame();
         frame.setContentPane(controller.getDisplay());
+        //frame.pack();
         frame.setVisible(true);
     }
 
@@ -26,7 +27,14 @@ public class GameRunner implements Runnable {
         @Override
         protected Object doInBackground() throws Exception {
             while(controller.isGameRunning()) {
-                controller.getDisplay().repaint();
+
+                controller.update();
+                //controller.getDisplay().repaint();
+
+
+
+                //controller.displayBoaard();
+
             }
 
             return null;

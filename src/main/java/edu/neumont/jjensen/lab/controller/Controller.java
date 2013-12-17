@@ -66,4 +66,8 @@ public class Controller {
     public Display getDisplay() {
         return display;
     }
+
+    public void update() {
+        game.update();
+    }
 }

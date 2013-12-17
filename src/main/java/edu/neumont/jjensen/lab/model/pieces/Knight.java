@@ -25,9 +25,14 @@ public class Knight extends Piece {
 
     }
 
+    public Knight(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+        setupKnightPositionCreators();
+    }
+
     @Override
     public Knight getInstance() {
-        return new Knight();
+        return new Knight(whiteImage, blackImage);
     }
 
     @Override
@@ -38,7 +43,12 @@ public class Knight extends Piece {
             tempPos = creator.getNewPosition(srcPos);
 
             if(isInBounds(tempPos, 0, game.getBoardSize())) {
-                moves.add(tempPos);
+                if(game.getCell(tempPos).isOccupied() && !game.getCell(tempPos).getPiece().getColor().equals(this.getColor())){
+                    moves.add(tempPos);
+                } else if(!game.getCell(tempPos).isOccupied()) {
+                    moves.add(tempPos);
+                }
+
             }
 
 

@@ -1,5 +1,7 @@
 package edu.neumont.jjensen.lab.model;
 
+import edu.neumont.jjensen.lab.controller.Controller;
+
 /**
  * Created with IntelliJ IDEA.
  * User: jjensen
@@ -8,10 +10,11 @@ package edu.neumont.jjensen.lab.model;
  */
 public class Board {
     private Cell[][] cells;
-
+    private Controller controller;
     private final int BOARD_SIZE = 8;
 
-    public Board() {
+    public Board(Controller controller) {
+        this.controller = controller;
         setupBoard();
 
     }
@@ -22,7 +25,7 @@ public class Board {
 
         for(int i = 0; i < BOARD_SIZE; i++) {
             for(int j = 0; j < BOARD_SIZE; j++) {
-                 cells[i][j] = new Cell();
+                 cells[i][j] = new Cell(controller, new Position(i, j));
 
             }
         }
@@ -59,6 +62,12 @@ public class Board {
     }
 
 
+    public synchronized void update() {
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                cells[column][row].update();
 
-
+            }
+        }
+    }
 }

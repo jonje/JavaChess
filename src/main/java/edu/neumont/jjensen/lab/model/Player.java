@@ -59,34 +59,21 @@ public class Player {
         return kingInCheck;
     }
 
-    public void takeTurn() {
-        displayMessage("Select piece:(Ex. A7)");
-        String userInput = getUserInput();
-        Position selectedPosition = null;
-        if(isValidInput(userInput) && game.getCell(getPosition(userInput)).isOccupied()) {
-            selectedPosition = getPosition(userInput);
+    public void takeTurn(Position selectedPosition, Position destPos) {
+
             Piece piece = game.getCell(selectedPosition).getPiece();
-            String moves = "";
-            Iterator<Position> possibleMoves = piece.getMovesList(selectedPosition, game);
-            while(possibleMoves.hasNext()) {
-                moves += "[" + possibleMoves.next().toString() + "]";
 
-            }
-
-            if(moves.length() > 0) {
-                displayMessage(moves);
-                displayMessage("Enter position to move to:");
-                if(performMove(selectedPosition)) {
+                if(performMove(selectedPosition, destPos)) {
                     changePawn(piece);
                     checkForPawnPromotion(piece, selectedPosition, game);
                     game.endTurn();
                 }
-            }
 
 
 
 
-        }
+
+
 
 
     }
@@ -121,14 +108,13 @@ public class Player {
         }
     }
 
-    private boolean performMove(Position selectedPosition) {
+    private boolean performMove(Position selectedPosition, Position destPos) {
         boolean performed = false;
-        String userInput = getUserInput();
-        if(isValidInput(userInput)) {
-            String move = selectedPosition.toString() + " " + new Position(userInput).toString();
+
+            String move = selectedPosition.toString() + " " + destPos.toString();
             performed = game.performMove(move);
 
-        }
+
         return performed;
     }
 

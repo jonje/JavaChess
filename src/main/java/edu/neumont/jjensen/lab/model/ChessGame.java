@@ -16,17 +16,38 @@ public class ChessGame {
     private Player currentPlayer;
     private MoveInterpreter moveInterpreter;
     private Controller controller;
+    private boolean isPieceSelected;
+    private Position firstPos;
+
     private boolean gameRunning;
 
     public ChessGame(Controller controller) {
-        board = new Board();
+        board = new Board(controller);
         this.controller = controller;
         whitePlayer = new Player(TeamColor.WHITE, this);
         blackPlayer = new Player(TeamColor.BLACK, this);
 
         currentPlayer = whitePlayer;
         moveInterpreter = new MoveInterpreter(controller);
+        isPieceSelected = false;
     }
+
+    public boolean isPieceSelected() {
+        return isPieceSelected;
+    }
+
+    public void setPieceSelected(boolean pieceSelected) {
+        this.isPieceSelected = pieceSelected;
+    }
+
+    public void setSelectedPos(Position pos) {
+        this.firstPos = pos;
+    }
+
+    public Position getFirstPos() {
+        return firstPos;
+    }
+
 
     public Cell getCell(Position key) {
         return board.getCell(key);
@@ -76,5 +97,9 @@ public class ChessGame {
 
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
+    }
+
+    public void update() {
+        board.update();
     }
 }

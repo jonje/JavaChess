@@ -22,9 +22,13 @@ public class Pawn extends Piece {
         isFirstTurn = true;
     }
 
+    public Pawn(String whiteImage, String blackImage) {
+        super(whiteImage, blackImage);
+        isFirstTurn = true;
+    }
     @Override
     public Pawn getInstance(){
-        return new Pawn();
+        return new Pawn(whiteImage, blackImage);
     }
 
     @Override

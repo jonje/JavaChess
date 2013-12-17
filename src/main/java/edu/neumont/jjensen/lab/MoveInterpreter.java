@@ -101,7 +101,7 @@ public class MoveInterpreter {
             matchFound = true;
             Piece piece = getPieceType(matcher.group("pieceType")).getInstance();
             piece.setColor(getPieceColor(matcher.group("color")));
-            piece.setAsciiImage();
+
             controller.setPiece(new Position(matcher.group("location").toUpperCase()), piece);
 
 
@@ -186,12 +186,12 @@ public class MoveInterpreter {
 
     private void setupPieceTypes() {
         pieceTypes = new HashMap<>();
-        pieceTypes.put("R", new Rook());
-        pieceTypes.put("Q", new Queen());
-        pieceTypes.put("B", new Bishop());
-        pieceTypes.put("N", new Knight());
-        pieceTypes.put("K", new King());
-        pieceTypes.put("P", new Pawn());
+        pieceTypes.put("R", new Rook("\u2656", "\u265C"));
+        pieceTypes.put("Q", new Queen("\u2655", "\u265B"));
+        pieceTypes.put("B", new Bishop("\u2657", "\u265D"));
+        pieceTypes.put("N", new Knight("\u2658", "\u265E"));
+        pieceTypes.put("K", new King("\u2654", "\u265A"));
+        pieceTypes.put("P", new Pawn("\u2659", "\u265F"));
     }
 
     private Piece getPieceType(String pieceCode) {

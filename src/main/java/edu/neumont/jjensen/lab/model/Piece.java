@@ -14,8 +14,17 @@ public abstract class Piece {
     private String asciiImage;
     protected String asciiLetter;
 
+    protected String blackImage;
+    protected String whiteImage;
+    //private ImageIcon image;
+
     public Piece() {
 
+    }
+
+    public Piece(String whiteImage, String blackImage)  {
+        this.whiteImage = whiteImage;
+        this.blackImage = blackImage;
     }
 
     public void setColor(TeamColor color) {
@@ -24,6 +33,20 @@ public abstract class Piece {
 
     public TeamColor getColor() {
         return color;
+    }
+
+    /*public void setImage(ImageIcon image) {
+        this.image = image;
+    }
+*/
+    public void setImages(String whiteImage, String blackImage) {
+        this.whiteImage = whiteImage;
+        this.blackImage = blackImage;
+    }
+
+    public String getImage() {
+
+        return (getColor().equals(TeamColor.BLACK)) ? blackImage : whiteImage;
     }
 
     public boolean isSelected() {
